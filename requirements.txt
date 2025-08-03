@@ -1,4 +1,4 @@
 py-cord==2.4.1
 flask
 jinja2
-aiohttp
+aiohttp==3.9.5
