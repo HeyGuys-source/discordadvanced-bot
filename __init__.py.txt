@@ -1,0 +1,19 @@
+# cogs/__init__.py
+
+# This file intentionally left blank.
+# It signals to Python that 'cogs' is a package.
+
+# cogs/__init__.py
+
+# Optionally, list all cogs for easy import elsewhere
+__all__ = [
+    "moderation",
+    "automod",
+    "reaction_roles",
+    "custom_commands",
+    "logging",
+    "welcome",
+    "starboard",
+    "leveling",
+    "fun"
+]
