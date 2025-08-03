@@ -1,4 +1,0 @@
-py-cord==2.4.1
-flask
-jinja2
-aiohttp
