@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ guild.name }} - Configuration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-robot me-2"></i>
+                Advanced Discord Bot
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/dashboard">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Back to Dashboard
+                </a>
+                <a class="nav-link" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Server Header -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    {% if guild.icon %}
+                    <img src="https://cdn.discordapp.com/icons/{{ guild.id }}/{{ guild.icon }}.png" 
+                         class="rounded me-3" width="64" height="64">
+                    {% else %}
+                    <div class="guild-icon-placeholder me-3 large">
+                        {{ guild.name[0].upper() }}
+                    </div>
+                    {% endif %}
+                    <div class="flex-grow-1">
+                        <h2 class="mb-1">{{ guild.name }}</h2>
+                        <p class="text-muted mb-1">ID: {{ guild.id }}</p>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-success me-2">
+                                <i class="fas fa-users me-1"></i>
+                                <span id="member-count">Loading...</span> members
+                            </span>
+                            <span class="badge bg-info">
+                                <i class="fas fa-hashtag me-1"></i>
+                                <span id="channel-count">Loading...</span> channels
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Tabs -->
+        <div class="row">
+            <div class="col-lg-3 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">Configuration</h6>
+                        <div class="nav nav-pills flex-column" id="v-pills-tab" role="tablist">
+                            <button class="nav-link active" id="v-pills-general-tab" data-bs-toggle="pill" data-bs-target="#v-pills-general" type="button">
+                                <i class="fas fa-cog me-2"></i>General
+                            </button>
+                            <button class="nav-link" id="v-pills-moderation-tab" data-bs-toggle="pill" data-bs-target="#v-pills-moderation" type="button">
+                                <i class="fas fa-shield-alt me-2"></i>Moderation
+                            </button>
+                            <button class="nav-link" id="v-pills-automod-tab" data-bs-toggle="pill" data-bs-target="#v-pills-automod" type="button">
+                                <i class="fas fa-robot me-2"></i>AutoMod
+                            </button>
+                            <button class="nav-link" id="v-pills-welcome-tab" data-bs-toggle="pill" data-bs-target="#v-pills-welcome" type="button">
+                                <i class="fas fa-door-open me-2"></i>Welcome
+                            </button>
+                            <button class="nav-link" id="v-pills-starboard-tab" data-bs-toggle="pill" data-bs-target="#v-pills-starboard" type="button">
+                                <i class="fas fa-star me-2"></i>Starboard
+                            </button>
+                            <button class="nav-link" id="v-pills-logging-tab" data-bs-toggle="pill" data-bs-target="#v-pills-logging" type="button">
+                                <i class="fas fa-clipboard-list me-2"></i>Logging
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <!-- General Settings -->
+                    <div class="tab-pane fade show active" id="v-pills-general" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-cog me-2"></i>General Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="general-settings-form">
+                                    <div class="mb-3">
+                                        <label for="prefix" class="form-label">Command Prefix</label>
+                                        <input type="text" class="form-control" id="prefix" name="prefix" placeholder="!">
+                                        <div class="form-text">Characters used to trigger commands (e.g., !, ?, $)</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Settings
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Moderation Settings -->
+                    <div class="tab-pane fade" id="v-pills-moderation" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-shield-alt me-2"></i>Moderation Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Available Commands</h6>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>/kick - Kick members</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>/ban - Ban members</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>/timeout - Timeout members</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>/warn - Warn members</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>/purge - Delete messages</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Required Permissions</h6>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-key text-warning me-2"></i>Kick Members</li>
+                                            <li><i class="fas fa-key text-warning me-2"></i>Ban Members</li>
+                                            <li><i class="fas fa-key text-warning me-2"></i>Moderate Members</li>
+                                            <li><i class="fas fa-key text-warning me-2"></i>Manage Messages</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AutoMod Settings -->
+                    <div class="tab-pane fade" id="v-pills-automod" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-robot me-2"></i>AutoMod Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="automod-settings-form">
+                                    <div class="mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="automod_enabled" name="automod_enabled">
+                                            <label class="form-check-label" for="automod_enabled">
+                                                Enable AutoMod
+                                            </label>
+                                        </div>
+                                        <div class="form-text">Automatically moderate spam, inappropriate content, and rule violations</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Protected Against</h6>
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-shield text-success me-2"></i>Spam messages</li>
+                                                <li><i class="fas fa-shield text-success me-2"></i>Excessive mentions</li>
+                                                <li><i class="fas fa-shield text-success me-2"></i>Discord invites</li>
+                                                <li><i class="fas fa-shield text-success me-2"></i>Excessive links</li>
+                                                <li><i class="fas fa-shield text-success me-2"></i>CAPS spam</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Actions Taken</h6>
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-trash text-danger me-2"></i>Delete violating messages</li>
+                                                <li><i class="fas fa-clock text-warning me-2"></i>Timeout repeat offenders</li>
+                                                <li><i class="fas fa-exclamation-triangle text-warning me-2"></i>Send warnings</li>
+                                                <li><i class="fas fa-clipboard-list text-info me-2"></i>Log violations</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Settings
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Welcome Settings -->
+                    <div class="tab-pane fade" id="v-pills-welcome" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-door-open me-2"></i>Welcome & Farewell</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="welcome-settings-form">
+                                    <div class="mb-3">
+                                        <label for="welcome_channel_id" class="form-label">Welcome Channel</label>
+                                        <select class="form-select" id="welcome_channel_id" name="welcome_channel_id">
+                                            <option value="">Select a channel...</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="welcome_message" class="form-label">Welcome Message</label>
+                                        <textarea class="form-control" id="welcome_message" name="welcome_message" rows="3" 
+                                                  placeholder="Welcome {user.mention} to {server}! You are our {server.members.ordinal} member!"></textarea>
+                                        <div class="form-text">Use variables like {user.mention}, {server}, {server.members}</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="farewell_message" class="form-label">Farewell Message</label>
+                                        <textarea class="form-control" id="farewell_message" name="farewell_message" rows="3" 
+                                                  placeholder="Goodbye {user}! We'll miss you."></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="auto_role_id" class="form-label">Auto Role</label>
+                                        <select class="form-select" id="auto_role_id" name="auto_role_id">
+                                            <option value="">No auto role</option>
+                                        </select>
+                                        <div class="form-text">Role automatically assigned to new members</div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Settings
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Starboard Settings -->
+                    <div class="tab-pane fade" id="v-pills-starboard" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-star me-2"></i>Starboard Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="starboard-settings-form">
+                                    <div class="mb-3">
+                                        <label for="starboard_channel_id" class="form-label">Starboard Channel</label>
+                                        <select class="form-select" id="starboard_channel_id" name="starboard_channel_id">
+                                            <option value="">Disabled</option>
+                                        </select>
+                                        <div class="form-text">Channel where starred messages will be posted</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="starboard_threshold" class="form-label">Star Threshold</label>
+                                        <input type="number" class="form-control" id="starboard_threshold" name="starboard_threshold" 
+                                               min="1" max="50" value="3">
+                                        <div class="form-text">Number of ⭐ reactions required to add message to starboard</div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Settings
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Logging Settings -->
+                    <div class="tab-pane fade" id="v-pills-logging" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-clipboard-list me-2"></i>Event Logging</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="logging-settings-form">
+                                    <div class="mb-3">
+                                        <label for="log_channel_id" class="form-label">Log Channel</label>
+                                        <select class="form-select" id="log_channel_id" name="log_channel_id">
+                                            <option value="">Disabled</option>
+                                        </select>
+                                        <div class="form-text">Channel where event logs will be posted</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <h6>Logged Events</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-edit text-warning me-2"></i>Message edits</li>
+                                                    <li><i class="fas fa-trash text-danger me-2"></i>Message deletions</li>
+                                                    <li><i class="fas fa-user-plus text-success me-2"></i>Member joins</li>
+                                                    <li><i class="fas fa-user-minus text-danger me-2"></i>Member leaves</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li><i class="fas fa-user-edit text-info me-2"></i>Member updates</li>
+                                                    <li><i class="fas fa-plus text-success me-2"></i>Channel creation</li>
+                                                    <li><i class="fas fa-minus text-danger me-2"></i>Channel deletion</li>
+                                                    <li><i class="fas fa-user-shield text-warning me-2"></i>Role changes</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-2"></i>Save Settings
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    <script>
+        // Initialize guild configuration
+        const guildId = {{ guild.id }};
+        initializeGuildConfig(guildId);
+    </script>
+</body>
+</html>

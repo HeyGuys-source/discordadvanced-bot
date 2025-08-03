@@ -1,0 +1,314 @@
+2025-08-03 03:00:37,667 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:00:38,138 - root - ERROR - DISCORD_TOKEN environment variable not set
+2025-08-03 03:01:58,276 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:01:58,402 - root - ERROR - DISCORD_TOKEN environment variable not set
+2025-08-03 03:02:04,497 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:02:04,632 - discord.client - INFO - logging in using static token
+2025-08-03 03:02:04,639 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.97.226:5000
+2025-08-03 03:02:04,640 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-03 03:02:04,908 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:04] "GET / HTTP/1.1" 200 -
+2025-08-03 03:02:05,076 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:05] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-08-03 03:02:05,397 - root - INFO - Database initialized
+2025-08-03 03:02:05,410 - root - INFO - Loaded cogs.moderation
+2025-08-03 03:02:05,414 - root - INFO - Loaded cogs.automod
+2025-08-03 03:02:05,418 - root - INFO - Loaded cogs.reaction_roles
+2025-08-03 03:02:05,423 - root - INFO - Loaded cogs.custom_commands
+2025-08-03 03:02:05,427 - root - INFO - Loaded cogs.logging
+2025-08-03 03:02:05,432 - root - INFO - Loaded cogs.welcome
+2025-08-03 03:02:05,436 - root - INFO - Loaded cogs.starboard
+2025-08-03 03:02:05,580 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:05] "GET / HTTP/1.1" 200 -
+2025-08-03 03:02:05,716 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:05] "GET /static/css/dashboard.css HTTP/1.1" 200 -
+2025-08-03 03:02:05,834 - root - INFO - Synced 31 command(s)
+2025-08-03 03:02:06,098 - root - ERROR - Bot error: Shard ID None is requesting privileged intents that have not been explicitly enabled in the developer portal. It is recommended to go to https://discord.com/developers/applications/ and explicitly enable the privileged intents within your application's page. If this is not possible, then consider disabling the privileged intents instead.
+2025-08-03 03:02:06,227 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:06] "GET /static/css/dashboard.css HTTP/1.1" 200 -
+2025-08-03 03:02:18,165 - werkzeug - INFO - 127.0.0.1 - - [03/Aug/2025 03:02:18] "GET / HTTP/1.1" 200 -
+2025-08-03 03:02:18,180 - werkzeug - INFO - 127.0.0.1 - - [03/Aug/2025 03:02:18] "GET /static/css/dashboard.css HTTP/1.1" 200 -
+2025-08-03 03:02:18,181 - werkzeug - INFO - 127.0.0.1 - - [03/Aug/2025 03:02:18] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-08-03 03:02:18,852 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:18] "GET / HTTP/1.1" 200 -
+2025-08-03 03:02:19,671 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:19] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-08-03 03:02:19,674 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:19] "GET /static/css/dashboard.css HTTP/1.1" 200 -
+2025-08-03 03:02:29,254 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:02:29] "[32mGET /login HTTP/1.1[0m" 302 -
+2025-08-03 03:04:38,601 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:38] "GET / HTTP/1.1" 200 -
+2025-08-03 03:04:38,764 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:38] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:04:39,389 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:39] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:04:42,979 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:04:43,109 - discord.client - INFO - logging in using static token
+2025-08-03 03:04:43,118 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.97.226:5000
+2025-08-03 03:04:43,118 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-03 03:04:43,343 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:43] "GET / HTTP/1.1" 200 -
+2025-08-03 03:04:43,358 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:43] "GET / HTTP/1.1" 200 -
+2025-08-03 03:04:43,382 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:43] "GET / HTTP/1.1" 200 -
+2025-08-03 03:04:43,512 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:43] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:04:43,618 - root - INFO - Database initialized
+2025-08-03 03:04:43,622 - root - INFO - Loaded cogs.moderation
+2025-08-03 03:04:43,624 - root - INFO - Loaded cogs.automod
+2025-08-03 03:04:43,625 - root - INFO - Loaded cogs.reaction_roles
+2025-08-03 03:04:43,628 - root - INFO - Loaded cogs.custom_commands
+2025-08-03 03:04:43,629 - root - INFO - Loaded cogs.logging
+2025-08-03 03:04:43,630 - root - INFO - Loaded cogs.welcome
+2025-08-03 03:04:43,631 - root - INFO - Loaded cogs.starboard
+2025-08-03 03:04:43,847 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:43] "GET / HTTP/1.1" 200 -
+2025-08-03 03:04:43,912 - root - INFO - Synced 31 command(s)
+2025-08-03 03:04:44,031 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:44] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:04:44,130 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:44] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:04:44,184 - root - ERROR - Bot error: Shard ID None is requesting privileged intents that have not been explicitly enabled in the developer portal. It is recommended to go to https://discord.com/developers/applications/ and explicitly enable the privileged intents within your application's page. If this is not possible, then consider disabling the privileged intents instead.
+2025-08-03 03:04:44,674 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:04:44] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:05:33,449 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:33] "GET / HTTP/1.1" 200 -
+2025-08-03 03:05:34,256 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:34] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:05:34,269 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:34] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:05:35,570 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:35] "GET / HTTP/1.1" 200 -
+2025-08-03 03:05:35,638 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:35] "GET / HTTP/1.1" 200 -
+2025-08-03 03:05:35,808 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:35] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:05:36,176 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:36] "GET / HTTP/1.1" 200 -
+2025-08-03 03:05:36,358 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:36] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:05:36,436 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:36] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:05:36,997 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:05:36] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:08:21,351 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:21] "GET / HTTP/1.1" 200 -
+2025-08-03 03:08:22,018 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:22] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:08:22,189 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:22] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:08:22,807 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:22] "GET / HTTP/1.1" 200 -
+2025-08-03 03:08:22,904 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:22] "GET / HTTP/1.1" 200 -
+2025-08-03 03:08:23,078 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:23] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:08:23,424 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:23] "GET / HTTP/1.1" 200 -
+2025-08-03 03:08:23,680 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:23] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:08:23,710 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:23] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:08:24,313 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:08:24] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:10:32,593 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:32] "GET / HTTP/1.1" 200 -
+2025-08-03 03:10:32,757 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:32] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:10:33,211 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:33] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:10:34,301 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:34] "GET / HTTP/1.1" 200 -
+2025-08-03 03:10:34,357 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:34] "GET / HTTP/1.1" 200 -
+2025-08-03 03:10:34,532 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:34] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:10:34,936 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:34] "GET / HTTP/1.1" 200 -
+2025-08-03 03:10:35,117 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:35] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:10:35,138 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:35] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:10:35,766 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:10:35] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:13:42,342 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:42] "GET / HTTP/1.1" 200 -
+2025-08-03 03:13:43,081 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:43] "GET / HTTP/1.1" 200 -
+2025-08-03 03:13:43,187 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:43] "GET / HTTP/1.1" 200 -
+2025-08-03 03:13:43,205 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:43] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:13:43,207 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:43] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:13:43,259 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:43] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:13:43,924 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:43] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:13:46,614 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:13:46,828 - discord.client - INFO - logging in using static token
+2025-08-03 03:13:46,839 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.97.226:5000
+2025-08-03 03:13:46,840 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-03 03:13:47,053 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "GET / HTTP/1.1" 200 -
+2025-08-03 03:13:47,078 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "GET / HTTP/1.1" 200 -
+2025-08-03 03:13:47,080 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "GET / HTTP/1.1" 200 -
+2025-08-03 03:13:47,103 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "GET / HTTP/1.1" 200 -
+2025-08-03 03:13:47,229 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:13:47,251 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:13:47,254 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:13:47,401 - root - INFO - Database initialized
+2025-08-03 03:13:47,405 - root - INFO - Loaded cogs.moderation
+2025-08-03 03:13:47,406 - root - INFO - Loaded cogs.automod
+2025-08-03 03:13:47,407 - root - INFO - Loaded cogs.reaction_roles
+2025-08-03 03:13:47,408 - root - INFO - Loaded cogs.custom_commands
+2025-08-03 03:13:47,409 - root - INFO - Loaded cogs.logging
+2025-08-03 03:13:47,410 - root - INFO - Loaded cogs.welcome
+2025-08-03 03:13:47,411 - root - INFO - Loaded cogs.starboard
+2025-08-03 03:13:47,415 - root - INFO - Loaded cogs.leveling
+2025-08-03 03:13:47,465 - root - INFO - Loaded cogs.fun
+2025-08-03 03:13:47,869 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:13:47] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:13:48,002 - root - INFO - Synced 51 command(s)
+2025-08-03 03:13:48,306 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: df54d1c43cb214fca64522f6a8995711).
+2025-08-03 03:13:50,308 - root - INFO - Kaiju Blocky#8309 has connected to Discord!
+2025-08-03 03:13:50,309 - root - INFO - Bot is in 0 guilds
+2025-08-03 03:14:44,751 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:14:45,099 - discord.client - INFO - logging in using static token
+2025-08-03 03:14:45,167 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.97.226:5000
+2025-08-03 03:14:45,167 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-03 03:14:45,605 - root - INFO - Database initialized
+2025-08-03 03:14:45,609 - root - INFO - Loaded cogs.moderation
+2025-08-03 03:14:45,611 - root - INFO - Loaded cogs.automod
+2025-08-03 03:14:45,612 - root - INFO - Loaded cogs.reaction_roles
+2025-08-03 03:14:45,614 - root - INFO - Loaded cogs.custom_commands
+2025-08-03 03:14:45,615 - root - INFO - Loaded cogs.logging
+2025-08-03 03:14:45,616 - root - INFO - Loaded cogs.welcome
+2025-08-03 03:14:45,617 - root - INFO - Loaded cogs.starboard
+2025-08-03 03:14:45,619 - root - INFO - Loaded cogs.leveling
+2025-08-03 03:14:45,621 - root - INFO - Loaded cogs.fun
+2025-08-03 03:14:46,016 - root - INFO - Synced 51 command(s)
+2025-08-03 03:14:46,071 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:14:46] "GET / HTTP/1.1" 200 -
+2025-08-03 03:14:46,072 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:14:46] "GET / HTTP/1.1" 200 -
+2025-08-03 03:14:46,074 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:14:46] "GET / HTTP/1.1" 200 -
+2025-08-03 03:14:46,254 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:14:46] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:14:46,263 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:14:46] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:14:46,292 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: eb6cff2ee16616c380e9daad64d7042c).
+2025-08-03 03:14:46,879 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:14:46] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:14:46,902 - werkzeug - INFO - 172.31.97.226 - - [03/Aug/2025 03:14:46] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:14:48,294 - root - INFO - Kaiju Blocky#8309 has connected to Discord!
+2025-08-03 03:14:48,294 - root - INFO - Bot is in 0 guilds
+2025-08-03 03:29:49,730 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:29:50,122 - discord.client - INFO - logging in using static token
+2025-08-03 03:29:50,136 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.75.34:5000
+2025-08-03 03:29:50,137 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-03 03:29:50,658 - root - INFO - Database initialized
+2025-08-03 03:29:50,673 - root - INFO - Loaded cogs.moderation
+2025-08-03 03:29:50,677 - root - INFO - Loaded cogs.automod
+2025-08-03 03:29:50,679 - root - INFO - Loaded cogs.reaction_roles
+2025-08-03 03:29:50,681 - root - INFO - Loaded cogs.custom_commands
+2025-08-03 03:29:50,682 - root - INFO - Loaded cogs.logging
+2025-08-03 03:29:50,686 - root - INFO - Loaded cogs.welcome
+2025-08-03 03:29:50,688 - root - INFO - Loaded cogs.starboard
+2025-08-03 03:29:50,691 - root - INFO - Loaded cogs.leveling
+2025-08-03 03:29:50,696 - root - INFO - Loaded cogs.fun
+2025-08-03 03:29:51,025 - root - INFO - Synced 51 command(s)
+2025-08-03 03:29:51,178 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:29:51] "GET / HTTP/1.1" 200 -
+2025-08-03 03:29:51,195 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:29:51] "GET / HTTP/1.1" 200 -
+2025-08-03 03:29:51,315 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 652e82731d2739d2fc31ae94c7c00632).
+2025-08-03 03:29:51,374 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:29:51] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:29:51,382 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:29:51] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:29:51,842 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:29:51] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:29:51,995 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:29:51] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:29:53,320 - root - INFO - Kaiju Blocky#8309 has connected to Discord!
+2025-08-03 03:29:53,320 - root - INFO - Bot is in 1 guilds
+2025-08-03 03:31:34,531 - discord.app_commands.tree - ERROR - Ignoring exception in command 'leaderboard'
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/leveling.py", line 220, in leaderboard
+    async with self.bot.db.get_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Database' object has no attribute 'get_connection'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'leaderboard' raised an exception: AttributeError: 'Database' object has no attribute 'get_connection'
+2025-08-03 03:31:49,127 - discord.client - ERROR - Ignoring exception in on_message
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/client.py", line 481, in _run_event
+    await coro(*args, **kwargs)
+  File "/home/runner/workspace/cogs/leveling.py", line 116, in on_message
+    result = await self.update_user_xp(guild_id, user_id, xp_gain)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/leveling.py", line 40, in update_user_xp
+    await self.create_user_level_data(guild_id, user_id)
+  File "/home/runner/workspace/cogs/leveling.py", line 29, in create_user_level_data
+    async with self.bot.db.get_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Database' object has no attribute 'get_connection'
+2025-08-03 03:34:06,061 - discord.app_commands.tree - ERROR - Ignoring exception in command 'rank'
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/leveling.py", line 153, in rank
+    data = await self.get_user_level_data(interaction.guild.id, target.id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/leveling.py", line 20, in get_user_level_data
+    async with self.bot.db.get_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Database' object has no attribute 'get_connection'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'rank' raised an exception: AttributeError: 'Database' object has no attribute 'get_connection'
+2025-08-03 03:34:16,398 - discord.app_commands.tree - ERROR - Ignoring exception in command 'rank'
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 857, in _do_call
+    return await self._callback(self.binding, interaction, **params)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/leveling.py", line 153, in rank
+    data = await self.get_user_level_data(interaction.guild.id, target.id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/cogs/leveling.py", line 20, in get_user_level_data
+    async with self.bot.db.get_connection() as conn:
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Database' object has no attribute 'get_connection'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/tree.py", line 1310, in _call
+    await command._invoke_with_namespace(interaction, namespace)
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 883, in _invoke_with_namespace
+    return await self._do_call(interaction, transformed_values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/discord/app_commands/commands.py", line 876, in _do_call
+    raise CommandInvokeError(self, e) from e
+discord.app_commands.errors.CommandInvokeError: Command 'rank' raised an exception: AttributeError: 'Database' object has no attribute 'get_connection'
+2025-08-03 03:35:56,439 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:35:56] "GET / HTTP/1.1" 200 -
+2025-08-03 03:35:56,615 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:35:56] "GET / HTTP/1.1" 200 -
+2025-08-03 03:36:27,194 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:36:27,433 - discord.client - INFO - logging in using static token
+2025-08-03 03:36:27,445 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.75.34:5000
+2025-08-03 03:36:27,446 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-03 03:36:27,901 - root - INFO - Database initialized
+2025-08-03 03:36:27,904 - root - INFO - Loaded cogs.moderation
+2025-08-03 03:36:27,906 - root - INFO - Loaded cogs.automod
+2025-08-03 03:36:27,907 - root - INFO - Loaded cogs.reaction_roles
+2025-08-03 03:36:27,909 - root - INFO - Loaded cogs.custom_commands
+2025-08-03 03:36:27,910 - root - INFO - Loaded cogs.logging
+2025-08-03 03:36:27,911 - root - INFO - Loaded cogs.welcome
+2025-08-03 03:36:27,912 - root - INFO - Loaded cogs.starboard
+2025-08-03 03:36:27,914 - root - INFO - Loaded cogs.leveling
+2025-08-03 03:36:27,916 - root - INFO - Loaded cogs.fun
+2025-08-03 03:36:28,356 - root - INFO - Synced 51 command(s)
+2025-08-03 03:36:28,501 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:36:28] "GET / HTTP/1.1" 200 -
+2025-08-03 03:36:28,503 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:36:28] "GET / HTTP/1.1" 200 -
+2025-08-03 03:36:28,737 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: 435b8f0a1336d11636b7d6b33cb7a00b).
+2025-08-03 03:36:28,740 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:36:28] "GET /static/css/dashboard.css HTTP/1.1" 200 -
+2025-08-03 03:36:29,341 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:36:29] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2025-08-03 03:36:29,343 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:36:29] "[36mGET /static/css/dashboard.css HTTP/1.1[0m" 304 -
+2025-08-03 03:36:29,369 - werkzeug - INFO - 172.31.75.34 - - [03/Aug/2025 03:36:29] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-08-03 03:36:30,741 - root - INFO - Kaiju Blocky#8309 has connected to Discord!
+2025-08-03 03:36:30,741 - root - INFO - Bot is in 1 guilds
+2025-08-03 03:52:56,420 - discord.client - WARNING - PyNaCl is not installed, voice will NOT be supported
+2025-08-03 03:52:57,124 - discord.client - INFO - logging in using static token
+2025-08-03 03:52:57,139 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.106.162:5000
+2025-08-03 03:52:57,139 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-08-03 03:52:57,580 - root - INFO - Database initialized
+2025-08-03 03:52:57,589 - root - INFO - Loaded cogs.moderation
+2025-08-03 03:52:57,591 - root - INFO - Loaded cogs.automod
+2025-08-03 03:52:57,593 - root - INFO - Loaded cogs.reaction_roles
+2025-08-03 03:52:57,594 - root - INFO - Loaded cogs.custom_commands
+2025-08-03 03:52:57,596 - root - INFO - Loaded cogs.logging
+2025-08-03 03:52:57,599 - root - INFO - Loaded cogs.welcome
+2025-08-03 03:52:57,601 - root - INFO - Loaded cogs.starboard
+2025-08-03 03:52:57,604 - root - INFO - Loaded cogs.leveling
+2025-08-03 03:52:57,608 - root - INFO - Loaded cogs.fun
+2025-08-03 03:52:57,902 - root - INFO - Synced 51 command(s)
+2025-08-03 03:52:58,190 - discord.gateway - INFO - Shard ID None has connected to Gateway (Session ID: b832fbff1ff2322b71c71bf527c7459a).
+2025-08-03 03:53:00,194 - root - INFO - Kaiju Blocky#8309 has connected to Discord!
+2025-08-03 03:53:00,194 - root - INFO - Bot is in 1 guilds
