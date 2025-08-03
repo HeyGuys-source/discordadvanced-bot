@@ -6,3 +6,4 @@ aiosqlite
 flask-cors
 requests
 PyNaCl
+utils
