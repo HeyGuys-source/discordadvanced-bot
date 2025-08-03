@@ -341,3 +341,9 @@ class Logging(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(Logging(bot))
+
+import discord
+
+# Monkey patch to remove voice_client to avoid audioop import
+if hasattr(discord, 'voice_client'):
+    del discord.voice_client
