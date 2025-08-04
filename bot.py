@@ -64,7 +64,7 @@ class AdvancedBot(commands.Bot):
             'cogs.logging',
             'cogs.welcome',
             'cogs.starboard',
-            'cogs.leveling',
+         #   'cogs.leveling',
             'cogs.fun'
             'cogs.advanced_moderation',
             'cogs.funcogs.discord_fun_commands',
