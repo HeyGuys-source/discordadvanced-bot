@@ -1,11 +1,11 @@
 import os
-from aiohttp import web
 import asyncio
+from aiohttp import web
+
+async def handle(request):
+    return web.Response(text="Bot is alive and kicking!")
 
 async def run_server():
-    async def handle(request):
-        return web.Response(text="Bot is alive and kicking!")
-
     app = web.Application()
     app.router.add_get('/', handle)
     port = int(os.environ.get('PORT', 8080))
@@ -15,6 +15,9 @@ async def run_server():
     await site.start()
     print(f"Keep-alive server running on port {port}")
 
+    # This keeps the server running forever
+    while True:
+        await asyncio.sleep(3600)  # sleep an hour, then loop again
+
 def keep_alive():
-    loop = asyncio.get_event_loop()
-    loop.create_task(run_server())
+    asyncio.run(run_server())
