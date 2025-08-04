@@ -1,5 +1,6 @@
 # keep_alive.py
 import logging
+from discord.ext import commands
 import os
 from aiohttp import web
 
