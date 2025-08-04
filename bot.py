@@ -152,3 +152,14 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
+
+from discord.ext import commands
+import discord
+
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+
+@bot.event
+async def on_message(message):
+    await bot.process_commands(message)
+
+bot.run("YOUR_TOKEN")
