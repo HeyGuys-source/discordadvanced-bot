@@ -8,9 +8,6 @@ import time
 from datetime import datetime, timedelta
 import os
 
-result = some_async_func()
-print(result)  # Check if None before awaiting
-
 # Economy System
 class EconomySystem:
     def __init__(self):
