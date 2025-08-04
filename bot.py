@@ -1,17 +1,27 @@
+import os
+import asyncio
 import discord
 from discord.ext import commands
-import asyncio
-import logging
-import os
-from keep_alive import keep_alive 
-keep_alive()
-from database import Database
-from config import Config
+from keep_alive import keep_alive  # Your async keep_alive coroutine
+from database import Database  # Your database module
+from config import Config      # Your config module
 
-async def start_keep_alive_server():
-    async def handle(request):
-        return web.Response(text="Bot is alive and kicking!")
+intents = discord.Intents.default()
+intents.message_content = True  # Enable if you handle messages
 
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+# Your existing bot event handlers and commands here...
+
+async def main():
+    # Start keep_alive web server (async)
+    await keep_alive()
+    
+    # Start your discord bot with your token from env
+    await bot.start(os.environ['DISCORD_TOKEN'])
+
+if __name__ == '__main__':
+    asyncio.run(main())
     app = web.Application()
     app.router.add_get('/', handle)
     port = int(os.environ.get('PORT', 8080))
