@@ -10,7 +10,6 @@ import os
 
 result = some_async_func()
 print(result)  # Check if None before awaiting
-await result  # Only await if it's not None
 
 # Economy System
 class EconomySystem:
