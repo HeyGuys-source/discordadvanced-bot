@@ -619,8 +619,6 @@ class FunCommandsCog(commands.Cog):
             color=0xe74c3c
         )
         
-        message = await ctx.send(embed=embed)
-        
         # Random delay between 3-8 seconds
         await asyncio.sleep(random.uniform(3, 8))
         
