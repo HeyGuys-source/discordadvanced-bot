@@ -57,7 +57,7 @@ class AdvancedBot(commands.Bot):
         
         for cog in cogs:
             try:
-                await bot.load_extension(cog)
+                await self.load_extension(cog)
                 logging.info(f'Loaded {cog}')
             except Exception as e:
                 logging.error(f'Failed to load {cog}: {e}')
