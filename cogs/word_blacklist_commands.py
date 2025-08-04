@@ -19,9 +19,26 @@ class WordBlacklistCommands(commands.Cog):
         """Ensure database connection is established"""
         if self.db_pool is None:
             try:
-                database_url = os.getenv('DATABASE_URL')
+                # Try multiple ways to get the DATABASE_URL
+                database_url = (
+                    os.getenv('DATABASE_URL') or 
+                    os.environ.get('DATABASE_URL') or
+                    os.getenv('PGDATABASE')
+                )
+                
                 if not database_url:
-                    raise ValueError("DATABASE_URL not found in environment")
+                    # If still no URL, construct from individual components
+                    host = os.getenv('PGHOST', 'localhost')
+                    port = os.getenv('PGPORT', '5432')
+                    user = os.getenv('PGUSER', 'postgres')
+                    password = os.getenv('PGPASSWORD', '')
+                    database = os.getenv('PGDATABASE', 'postgres')
+                    
+                    if host and user and database:
+                        database_url = f"postgresql://{user}:{password}@{host}:{port}/{database}"
+                        logger.info("Constructed DATABASE_URL from individual environment variables")
+                    else:
+                        raise ValueError("No database connection information found in environment variables")
                 
                 self.db_pool = await asyncpg.create_pool(
                     database_url,
