@@ -776,7 +776,6 @@ class FunCommandsCog(commands.Cog):
         )
         embed.set_footer(text="Highest bidder wins the mystery prize!")
         
-        await ctx.send(embed=embed)
         
         bids = {}
         start_time = time.time()
