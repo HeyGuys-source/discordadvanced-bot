@@ -51,6 +51,7 @@ class AdvancedBot(commands.Bot):
             'cogs.starboard',
             'cogs.leveling',
             'cogs.fun'
+            'cogs.advanced_moderation'
         ]
         
         for cog in cogs:
