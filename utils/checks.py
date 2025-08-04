@@ -1,5 +1,5 @@
-from discord.ext import commands
 import discord
+from discord.ext import commands
 
 def has_permissions(**perms):
     async def predicate(ctx):
@@ -12,5 +12,5 @@ def bot_has_permissions(**perms):
     async def predicate(ctx):
         if not ctx.guild:
             return False
-        return ctx.guild.me.guild_permissions >= discord.Permissions(**perms)
+        return ctx.me.guild_permissions >= discord.Permissions(**perms)
     return commands.check(predicate)
