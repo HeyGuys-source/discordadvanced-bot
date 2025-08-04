@@ -132,9 +132,6 @@ class FunCommandsCog(commands.Cog):
                 description=f"You don't have enough K-coins! You have {economy.get_balance(ctx.author.id):,} K-coins.",
                 color=0xe74c3c
             )
-        
-        await ctx.send(embed=embed)
-    
     @commands.command(name='richest', aliases=['leaderboard', 'top'])
     async def money_leaderboard(self, ctx):
         """Show the richest users"""
@@ -162,9 +159,6 @@ class FunCommandsCog(commands.Cog):
                     )
             except:
                 continue
-        
-        await ctx.send(embed=embed)
-    
     @commands.command(name='grant')
     @commands.has_permissions(administrator=True)
     async def grant_money(self, ctx, member: discord.Member, amount: int):
@@ -186,8 +180,6 @@ class FunCommandsCog(commands.Cog):
             inline=False
         )
         embed.set_footer(text=f"Granted by {ctx.author.display_name}")
-        
-        await ctx.send(embed=embed)
     
     # ============ SINGLE PLAYER GAMES ============
     
@@ -202,16 +194,13 @@ class FunCommandsCog(commands.Cog):
                 description=f"The coin landed on **{result}**!",
                 color=0x3498db
             )
-            await ctx.send(embed=embed)
-            return
-        
+             return
         if bet <= 0:
             embed = discord.Embed(
                 title="🪙 Coin Flip",
                 description=f"The coin landed on **{result}**!",
                 color=0x3498db
             )
-            await ctx.send(embed=embed)
             return
             
         user_balance = economy.get_balance(ctx.author.id)
@@ -265,8 +254,6 @@ class FunCommandsCog(commands.Cog):
                 description="You took too long to choose!",
                 color=0x95a5a6
             )
-        
-        await message.edit(embed=embed)
     
     @commands.command(name='slots', aliases=['slot'])
     async def slot_machine(self, ctx, bet: int = 0):
@@ -323,7 +310,6 @@ class FunCommandsCog(commands.Cog):
             inline=False
         )
         
-        await ctx.send(embed=embed)
     
     @commands.command(name='dice', aliases=['roll'])
     async def dice_game(self, ctx, sides: int = 6):
@@ -354,8 +340,6 @@ class FunCommandsCog(commands.Cog):
                 inline=False
             )
         
-        await ctx.send(embed=embed)
-    
     @commands.command(name='8ball')
     async def magic_8ball(self, ctx, *, question):
         """Ask the magic 8-ball a question"""
@@ -379,8 +363,6 @@ class FunCommandsCog(commands.Cog):
         embed.add_field(name="Answer", value=f"*{response}*", inline=False)
         embed.set_footer(text=f"Asked by {ctx.author.display_name}")
         
-        await ctx.send(embed=embed)
-    
     @commands.command(name='rps')
     async def rock_paper_scissors(self, ctx, choice: str = ""):
         """Play Rock Paper Scissors against the bot"""
@@ -390,7 +372,6 @@ class FunCommandsCog(commands.Cog):
                 description="Choose your move by typing: `!rps rock`, `!rps paper`, or `!rps scissors`",
                 color=0x3498db
             )
-            await ctx.send(embed=embed)
             return
         
         choice = choice.lower()
@@ -436,9 +417,6 @@ class FunCommandsCog(commands.Cog):
                 value=f"{economy.get_balance(ctx.author.id):,} K-coins",
                 inline=True
             )
-        
-        await ctx.send(embed=embed)
-    
     # ============ MULTIPLAYER GAMES ============
     
     @commands.command(name='trivia')
@@ -560,9 +538,6 @@ class FunCommandsCog(commands.Cog):
             description=f"**Target Number:** {target}\n\nType a number to guess! Closest guess wins.\n⏰ 20 seconds to guess!",
             color=0xf39c12
         )
-        
-        await ctx.send(embed=embed)
-        
         guesses = {}
         start_time = time.time()
         
