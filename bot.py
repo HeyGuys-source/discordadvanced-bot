@@ -3,7 +3,8 @@ from discord.ext import commands
 import asyncio
 import logging
 import os
-from keep_alive import keep_alive keep_alive()
+from keep_alive import keep_alive 
+keep_alive()
 from database import Database
 from config import Config
 
