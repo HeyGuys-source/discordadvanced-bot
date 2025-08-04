@@ -1,8 +1,11 @@
 # keep_alive.py
 import logging
+import asyncio
 from discord.ext import commands
 import os
 from aiohttp import web
+from database import Database
+from config import Config
 
 async def keep_alive():
     async def handle(request):
