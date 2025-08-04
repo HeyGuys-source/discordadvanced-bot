@@ -846,9 +846,3 @@ class FunCommandsCog(commands.Cog):
 # Function to add to your bot
 def setup(bot):
     bot.add_cog(FunCommandsCog(bot))
-
-async def setup(bot):
-    try:
-        await bot.add_cog(YourCogClassName(bot))
-    except Exception as e:
-        print(f"🚨 Forced setup error bypass in discord_fun_commands: {type(e).__name__} - {e}")
