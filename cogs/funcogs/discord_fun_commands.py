@@ -194,7 +194,6 @@ class FunCommandsCog(commands.Cog):
                 description=f"The coin landed on **{result}**!",
                 color=0x3498db
             )
-             return
         if bet <= 0:
             embed = discord.Embed(
                 title="🪙 Coin Flip",
