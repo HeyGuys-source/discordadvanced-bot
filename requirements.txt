@@ -7,5 +7,4 @@ flask-cors
 requests
 PyNaCl
 utils
-utils.checks
 cogs.funcogs
