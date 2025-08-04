@@ -71,7 +71,6 @@ class FunCommandsCog(commands.Cog):
             color=0xf1c40f
         )
         embed.set_thumbnail(url=target.display_avatar.url)
-        await ctx.send(embed=embed)
     
     @commands.command(name='daily')
     async def daily_coins(self, ctx):
@@ -96,9 +95,6 @@ class FunCommandsCog(commands.Cog):
                 description="Come back tomorrow for your next daily reward!",
                 color=0xe74c3c
             )
-        
-        await ctx.send(embed=embed)
-    
     @commands.command(name='give', aliases=['pay', 'transfer'])
     async def give_money(self, ctx, member: discord.Member, amount: int):
         """Give K-coins to another user"""
