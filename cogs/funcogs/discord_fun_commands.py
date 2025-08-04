@@ -11,11 +11,11 @@ import os
 # Economy System
 class EconomySystem:
     def __init__(self):
-        self.user_balances = {}  # user_id: balance
-        self.daily_claimed = {}  # user_id: last_claim_date
+        self.user_balances = {}
+        self.daily_claimed = {}
         
     def get_balance(self, user_id):
-        return self.user_balances.get(user_id, 100)  # Starting balance: 100 K-coins
+        return self.user_balances.get(user_id, 100)
     
     def add_money(self, user_id, amount):
         if user_id not in self.user_balances:
@@ -51,7 +51,6 @@ class EconomySystem:
 
 # Global instances
 economy = EconomySystem()
-active_games = {}
 
 class FunCommandsCog(commands.Cog):
     def __init__(self, bot):
@@ -192,77 +191,71 @@ class FunCommandsCog(commands.Cog):
     # ============ SINGLE PLAYER GAMES ============
     
     @commands.command(name='flip', aliases=['coinflip'])
-    async def coin_flip(self, ctx, bet: int = None):
+    async def coin_flip(self, ctx, bet: int = 0):
         """Flip a coin and optionally bet K-coins"""
         result = random.choice(['Heads', 'Tails'])
         
-        if bet is None:
+        if bet <= 0:
             embed = discord.Embed(
                 title="🪙 Coin Flip",
                 description=f"The coin landed on **{result}**!",
                 color=0x3498db
             )
-        else:
-            if bet <= 0:
-                await ctx.send("Bet must be positive!")
-                return
-            
-            user_balance = economy.get_balance(ctx.author.id)
-            if bet > user_balance:
-                await ctx.send(f"You don't have enough K-coins! You have {user_balance:,} K-coins.")
-                return
-            
-            # Player chooses heads or tails
-            embed = discord.Embed(
-                title="🪙 Choose Your Side",
-                description="React with 👤 for Heads or 🔄 for Tails",
-                color=0x3498db
-            )
-            message = await ctx.send(embed=embed)
-            await message.add_reaction('👤')
-            await message.add_reaction('🔄')
-            
-            def check(reaction, user):
-                return user == ctx.author and str(reaction.emoji) in ['👤', '🔄'] and reaction.message.id == message.id
-            
-            try:
-                reaction, user = await self.bot.wait_for('reaction_add', timeout=30.0, check=check)
-                choice = 'Heads' if str(reaction.emoji) == '👤' else 'Tails'
-                
-                won = choice == result
-                if won:
-                    winnings = bet * 2
-                    economy.add_money(ctx.author.id, winnings)
-                    embed = discord.Embed(
-                        title="🎉 You Won!",
-                        description=f"The coin landed on **{result}**!\nYou won **{winnings:,} K-coins**!",
-                        color=0x2ecc71
-                    )
-                else:
-                    economy.remove_money(ctx.author.id, bet)
-                    embed = discord.Embed(
-                        title="😢 You Lost!",
-                        description=f"The coin landed on **{result}**!\nYou lost **{bet:,} K-coins**.",
-                        color=0xe74c3c
-                    )
-                
-                embed.add_field(
-                    name="New Balance",
-                    value=f"{economy.get_balance(ctx.author.id):,} K-coins",
-                    inline=False
-                )
-                
-            except asyncio.TimeoutError:
-                embed = discord.Embed(
-                    title="⏰ Time's Up",
-                    description="You took too long to choose!",
-                    color=0x95a5a6
-                )
-            
-            await message.edit(embed=embed)
-        
-        if bet is None:
             await ctx.send(embed=embed)
+            return
+        
+        user_balance = economy.get_balance(ctx.author.id)
+        if bet > user_balance:
+            await ctx.send(f"You don't have enough K-coins! You have {user_balance:,} K-coins.")
+            return
+        
+        embed = discord.Embed(
+            title="🪙 Choose Your Side",
+            description="React with 👤 for Heads or 🔄 for Tails",
+            color=0x3498db
+        )
+        message = await ctx.send(embed=embed)
+        await message.add_reaction('👤')
+        await message.add_reaction('🔄')
+        
+        def check(reaction, user):
+            return user == ctx.author and str(reaction.emoji) in ['👤', '🔄'] and reaction.message.id == message.id
+        
+        try:
+            reaction, user = await self.bot.wait_for('reaction_add', timeout=30.0, check=check)
+            choice = 'Heads' if str(reaction.emoji) == '👤' else 'Tails'
+            
+            won = choice == result
+            if won:
+                winnings = bet * 2
+                economy.add_money(ctx.author.id, winnings)
+                embed = discord.Embed(
+                    title="🎉 You Won!",
+                    description=f"The coin landed on **{result}**!\nYou won **{winnings:,} K-coins**!",
+                    color=0x2ecc71
+                )
+            else:
+                economy.remove_money(ctx.author.id, bet)
+                embed = discord.Embed(
+                    title="😢 You Lost!",
+                    description=f"The coin landed on **{result}**!\nYou lost **{bet:,} K-coins**.",
+                    color=0xe74c3c
+                )
+            
+            embed.add_field(
+                name="New Balance",
+                value=f"{economy.get_balance(ctx.author.id):,} K-coins",
+                inline=False
+            )
+            
+        except asyncio.TimeoutError:
+            embed = discord.Embed(
+                title="⏰ Time's Up",
+                description="You took too long to choose!",
+                color=0x95a5a6
+            )
+        
+        await message.edit(embed=embed)
     
     @commands.command(name='slots', aliases=['slot'])
     async def slot_machine(self, ctx, bet: int):
@@ -277,11 +270,10 @@ class FunCommandsCog(commands.Cog):
             return
         
         symbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎', '7️⃣']
-        weights = [30, 25, 20, 15, 7, 2, 1]  # Different probabilities
+        weights = [30, 25, 20, 15, 7, 2, 1]
         
         result = [random.choices(symbols, weights=weights)[0] for _ in range(3)]
         
-        # Calculate winnings
         if result[0] == result[1] == result[2]:
             if result[0] == '💎':
                 multiplier = 50
@@ -299,7 +291,7 @@ class FunCommandsCog(commands.Cog):
         winnings = bet * multiplier
         
         if winnings > 0:
-            economy.add_money(ctx.author.id, winnings - bet)  # Subtract original bet
+            economy.add_money(ctx.author.id, winnings - bet)
             embed = discord.Embed(
                 title="🎰 SLOT MACHINE",
                 description=f"{''.join(result)}\n\n🎉 **YOU WON {winnings:,} K-COINS!**",
@@ -378,9 +370,9 @@ class FunCommandsCog(commands.Cog):
         await ctx.send(embed=embed)
     
     @commands.command(name='rps')
-    async def rock_paper_scissors(self, ctx, choice: str = None):
+    async def rock_paper_scissors(self, ctx, choice: str = ""):
         """Play Rock Paper Scissors against the bot"""
-        if choice is None:
+        if not choice:
             embed = discord.Embed(
                 title="✂️ Rock Paper Scissors",
                 description="Choose your move by typing: `!rps rock`, `!rps paper`, or `!rps scissors`",
@@ -396,7 +388,6 @@ class FunCommandsCog(commands.Cog):
         
         bot_choice = random.choice(['rock', 'paper', 'scissors'])
         
-        # Determine winner
         if choice == bot_choice:
             result = "It's a tie!"
             color = 0xf39c12
@@ -440,10 +431,12 @@ class FunCommandsCog(commands.Cog):
     @commands.command(name='trivia')
     async def trivia_game(self, ctx):
         """Start a multiplayer trivia game"""
-        # Free trivia API
-        async with aiohttp.ClientSession() as session:
-            try:
+        try:
+            async with aiohttp.ClientSession() as session:
                 async with session.get('https://opentdb.com/api.php?amount=1&type=multiple') as resp:
+                    if resp.status != 200:
+                        await ctx.send("Failed to fetch trivia question. Try again!")
+                        return
                     data = await resp.json()
                     
                 if data['response_code'] != 0:
@@ -452,12 +445,11 @@ class FunCommandsCog(commands.Cog):
                 
                 question_data = data['results'][0]
                 question = question_data['question']
-                correct_answer = question_data['correct_answer']
+                correct_answer = question_data['correct_answer']  
                 incorrect_answers = question_data['incorrect_answers']
                 category = question_data['category']
                 difficulty = question_data['difficulty']
                 
-                # Create answer options
                 all_answers = incorrect_answers + [correct_answer]
                 random.shuffle(all_answers)
                 correct_index = all_answers.index(correct_answer)
@@ -482,7 +474,6 @@ class FunCommandsCog(commands.Cog):
                 for i in range(len(all_answers)):
                     await message.add_reaction(answer_emojis[i])
                 
-                # Wait for reactions
                 participants = {}
                 start_time = time.time()
                 
@@ -502,13 +493,11 @@ class FunCommandsCog(commands.Cog):
                     except asyncio.TimeoutError:
                         continue
                 
-                # Calculate results
                 winners = []
                 for user_id, data in participants.items():
                     if data['answer'] == correct_index:
                         winners.append(data)
                 
-                # Sort winners by response time
                 winners.sort(key=lambda x: x['time'])
                 
                 result_embed = discord.Embed(
@@ -519,7 +508,7 @@ class FunCommandsCog(commands.Cog):
                 
                 if winners:
                     winner_text = ""
-                    for i, winner in enumerate(winners[:5]):  # Top 5 winners
+                    for i, winner in enumerate(winners[:5]):
                         points = [50, 30, 20, 15, 10][i] if i < 5 else 5
                         economy.add_money(winner['user'].id, points)
                         place = ["🥇", "🥈", "🥉", "4th", "5th"][i] if i < 5 else f"{i+1}th"
@@ -539,13 +528,13 @@ class FunCommandsCog(commands.Cog):
                 
                 await ctx.send(embed=result_embed)
                 
-            except Exception as e:
-                await ctx.send("Error fetching trivia question. Please try again!")
+        except Exception as e:
+            await ctx.send("Error fetching trivia question. Please try again!")
     
     @commands.command(name='countdown')
-    async def countdown_game(self, ctx, target: int = None):
+    async def countdown_game(self, ctx, target: int = 0):
         """Multiplayer countdown game - get closest to the target number"""
-        if target is None:
+        if target <= 0:
             target = random.randint(1, 1000)
         
         embed = discord.Embed(
@@ -586,7 +575,6 @@ class FunCommandsCog(commands.Cog):
             await ctx.send("No valid guesses! Game ended.")
             return
         
-        # Find winner (closest guess)
         winner_data = min(guesses.values(), key=lambda x: x['difference'])
         
         result_embed = discord.Embed(
@@ -595,15 +583,14 @@ class FunCommandsCog(commands.Cog):
             color=0x2ecc71
         )
         
-        # Award points based on accuracy
         if winner_data['difference'] == 0:
-            points = 100  # Exact guess
+            points = 100
         elif winner_data['difference'] <= 5:
-            points = 75   # Very close
+            points = 75
         elif winner_data['difference'] <= 20:
-            points = 50   # Close
+            points = 50
         else:
-            points = 25   # Participated
+            points = 25
         
         economy.add_money(winner_data['user'].id, points)
         
@@ -618,19 +605,6 @@ class FunCommandsCog(commands.Cog):
             inline=True
         )
         
-        # Show other top guesses
-        sorted_guesses = sorted(guesses.values(), key=lambda x: x['difference'])
-        other_guesses = []
-        for i, guess_data in enumerate(sorted_guesses[1:6]):  # Top 5 after winner
-            other_guesses.append(f"{guess_data['user'].display_name}: {guess_data['guess']}")
-        
-        if other_guesses:
-            result_embed.add_field(
-                name="Other Close Guesses",
-                value="\n".join(other_guesses),
-                inline=False
-            )
-        
         await ctx.send(embed=result_embed)
     
     @commands.command(name='racing', aliases=['race'])
@@ -644,7 +618,6 @@ class FunCommandsCog(commands.Cog):
         
         message = await ctx.send(embed=embed)
         
-        # Random delay between 3-8 seconds
         await asyncio.sleep(random.uniform(3, 8))
         
         race_embed = discord.Embed(
@@ -662,7 +635,6 @@ class FunCommandsCog(commands.Cog):
         try:
             reaction, winner = await self.bot.wait_for('reaction_add', timeout=10.0, check=check)
             
-            # Award winner
             points = random.randint(75, 150)
             economy.add_money(winner.id, points)
             
@@ -707,7 +679,6 @@ class FunCommandsCog(commands.Cog):
         message = await ctx.send(embed=embed)
         await asyncio.sleep(5)
         
-        # Hide the sequence
         hidden_embed = discord.Embed(
             title="🧠 Memory Game",
             description=f"Now type the sequence of {sequence_length} emojis!\n🔴🟢🔵🟡\n\n⏰ 30 seconds to answer!",
@@ -746,7 +717,6 @@ class FunCommandsCog(commands.Cog):
             except asyncio.TimeoutError:
                 continue
         
-        # Calculate results
         winners = [p for p in participants.values() if p['correct']]
         winners.sort(key=lambda x: x['time'])
         
@@ -758,7 +728,7 @@ class FunCommandsCog(commands.Cog):
         
         if winners:
             winner_text = ""
-            for i, winner in enumerate(winners[:3]):  # Top 3
+            for i, winner in enumerate(winners[:3]):
                 points = [100, 60, 40][i] if i < 3 else 20
                 economy.add_money(winner['user'].id, points)
                 place = ["🥇", "🥈", "🥉"][i] if i < 3 else f"{i+1}th"
@@ -835,12 +805,10 @@ class FunCommandsCog(commands.Cog):
             await ctx.send("No valid bids! Auction cancelled.")
             return
         
-        # Find winner
         winner_id = max(bids.keys(), key=lambda x: bids[x])
         winning_bid = bids[winner_id]
         winner = self.bot.get_user(winner_id)
         
-        # Process payment
         economy.remove_money(winner_id, winning_bid)
         economy.add_money(winner_id, prize["value"])
         
@@ -871,6 +839,5 @@ class FunCommandsCog(commands.Cog):
         
         await ctx.send(embed=result_embed)
 
-# Function to add to your bot
 def setup(bot):
     bot.add_cog(FunCommandsCog(bot))
