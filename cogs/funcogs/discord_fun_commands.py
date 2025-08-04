@@ -750,9 +750,7 @@ class FunCommandsCog(commands.Cog):
                 value="No one got the sequence right! Try again next time.",
                 inline=False
             )
-        
-        await ctx.send(embed=result_embed)
-    
+
     @commands.command(name='auction')
     async def auction_game(self, ctx):
         """Multiplayer auction - bid on mystery prizes"""
