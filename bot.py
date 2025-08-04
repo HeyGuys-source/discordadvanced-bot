@@ -53,7 +53,8 @@ class AdvancedBot(commands.Bot):
             'cogs.fun'
             'cogs.advanced_moderation',
             'cogs.funcogs.discord_fun_commands',
-            'cogs.discord_commands'
+            'cogs.discord_commands',
+            'cogs.word_blacklist_commands'
         ]
         
         for cog in cogs:
