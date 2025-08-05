@@ -73,7 +73,7 @@ class AdvancedBot(commands.Bot):
             'cogs.userinfo',
             'cogs.privateuserinfo',
             'cogs.serverdisplay',
-            'cogd.avatardisplay'
+            'cogs.avatardisplay'
         ]
         
         for cog in cogs:
