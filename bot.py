@@ -64,7 +64,8 @@ class AdvancedBot(commands.Bot):
             'cogs.dice',
             'cogs.connect4',
             'cogs.rpsgame',
-            'cogs.coinflip'
+            'cogs.coinflip',
+            'cogs.echo_command'
         ]
         
         for cog in cogs:
