@@ -41,12 +41,19 @@ class ServerDisplayCommand(commands.Cog):
             
             # Server icon
             if guild.icon:
-                embed.set_image(url=guild.icon.url)
-                embed.add_field(
-                    name="🖼️ Server Icon",
-                    value=f"[View Full Size]({guild.icon.url})",
-                    inline=True
-                )
+                try:
+                    embed.set_image(url=guild.icon.url)
+                    embed.add_field(
+                        name="🖼️ Server Icon",
+                        value=f"[View Full Size]({guild.icon.url})",
+                        inline=True
+                    )
+                except:
+                    embed.add_field(
+                        name="🖼️ Server Icon",
+                        value="Icon present but URL not accessible",
+                        inline=True
+                    )
             else:
                 embed.add_field(
                     name="🖼️ Server Icon",
@@ -160,25 +167,51 @@ class ServerDisplayCommand(commands.Cog):
             )
         except Exception as e:
             self.logger.error(f"Unexpected error in serverdisplay command: {e}")
-            await interaction.response.send_message(
-                "❌ An unexpected error occurred while fetching server information.",
-                ephemeral=True
-            )
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        "❌ An unexpected error occurred while fetching server information.",
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        "❌ An unexpected error occurred while fetching server information.",
+                        ephemeral=True
+                    )
+            except:
+                pass
     
-    @serverdisplay.error
-    async def serverdisplay_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def cog_app_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         """Handle command errors"""
-        if isinstance(error, commands.CommandOnCooldown):
-            await interaction.response.send_message(
-                f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
-                ephemeral=True
-            )
+        if isinstance(error, app_commands.CommandOnCooldown):
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
+                        ephemeral=True
+                    )
+            except:
+                pass
         else:
             self.logger.error(f"Command error: {error}")
-            await interaction.response.send_message(
-                "❌ An error occurred while executing the command.",
-                ephemeral=True
-            )
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        "❌ An error occurred while executing the command.",
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        "❌ An error occurred while executing the command.",
+                        ephemeral=True
+                    )
+            except:
+                pass
 
 async def setup(bot):
     """Setup function for the cog"""
