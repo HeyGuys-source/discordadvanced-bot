@@ -52,12 +52,17 @@ class UserInfoCommand(commands.Cog):
             )
             
             # Set user avatar as thumbnail
-            embed.set_thumbnail(url=user.display_avatar.url)
+            try:
+                embed.set_thumbnail(url=user.display_avatar.url)
+            except:
+                # Fallback if avatar URL is not accessible
+                pass
             
             # Basic user information
+            username = f"{user.name}#{user.discriminator}" if hasattr(user, 'discriminator') and user.discriminator and user.discriminator != "0" else user.name
             embed.add_field(
                 name="👤 Username", 
-                value=f"{user.name}#{user.discriminator}" if user.discriminator != "0" else user.name, 
+                value=username, 
                 inline=True
             )
             embed.add_field(name="🆔 User ID", value=user.id, inline=True)
@@ -94,7 +99,7 @@ class UserInfoCommand(commands.Cog):
             )
             
             # Current activity
-            if user.activity:
+            if hasattr(user, 'activity') and user.activity:
                 activity_type = {
                     discord.ActivityType.playing: "🎮 Playing",
                     discord.ActivityType.streaming: "📺 Streaming",
@@ -103,7 +108,8 @@ class UserInfoCommand(commands.Cog):
                     discord.ActivityType.custom: "💭 Custom Status",
                     discord.ActivityType.competing: "🏆 Competing in"
                 }
-                activity_text = f"{activity_type.get(user.activity.type, '❓')} {user.activity.name}"
+                activity_name = getattr(user.activity, 'name', 'Unknown Activity')
+                activity_text = f"{activity_type.get(user.activity.type, '❓')} {activity_name}"
                 embed.add_field(name="🎯 Activity", value=activity_text, inline=True)
             
             # Roles information
@@ -188,26 +194,54 @@ class UserInfoCommand(commands.Cog):
                 ephemeral=True
             )
         except Exception as e:
+            import traceback
             self.logger.error(f"Unexpected error in userinfo command: {e}")
-            await interaction.response.send_message(
-                "❌ An unexpected error occurred while fetching user information.", 
-                ephemeral=True
-            )
+            self.logger.error(f"Traceback: {traceback.format_exc()}")
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        "❌ An unexpected error occurred while fetching user information.", 
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        "❌ An unexpected error occurred while fetching user information.", 
+                        ephemeral=True
+                    )
+            except:
+                pass
     
-    @userinfo.error
-    async def userinfo_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def cog_app_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         """Handle command errors"""
-        if isinstance(error, commands.CommandOnCooldown):
-            await interaction.response.send_message(
-                f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
-                ephemeral=True
-            )
+        if isinstance(error, app_commands.CommandOnCooldown):
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
+                        ephemeral=True
+                    )
+            except:
+                pass
         else:
             self.logger.error(f"Command error: {error}")
-            await interaction.response.send_message(
-                "❌ An error occurred while executing the command.",
-                ephemeral=True
-            )
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        "❌ An error occurred while executing the command.",
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        "❌ An error occurred while executing the command.",
+                        ephemeral=True
+                    )
+            except:
+                pass
 
 async def setup(bot):
     """Setup function for the cog"""
