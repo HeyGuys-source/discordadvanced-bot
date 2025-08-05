@@ -59,12 +59,16 @@ class PrivateUserInfoCommand(commands.Cog):
             )
             
             # Set user avatar as thumbnail
-            embed.set_thumbnail(url=user.display_avatar.url)
+            try:
+                embed.set_thumbnail(url=user.display_avatar.url)
+            except:
+                # Fallback if avatar URL is not accessible
+                pass
             
             # Basic user information
             embed.add_field(
                 name="👤 Basic Information", 
-                value=f"**Username:** {user.name}#{user.discriminator if user.discriminator != '0' else user.name}\n"
+                value=f"**Username:** {user.name}#{user.discriminator if hasattr(user, 'discriminator') and user.discriminator and user.discriminator != '0' else user.name}\n"
                       f"**Display Name:** {user.display_name}\n"
                       f"**User ID:** {user.id}\n"
                       f"**Mention:** {user.mention}",
@@ -106,7 +110,7 @@ class PrivateUserInfoCommand(commands.Cog):
                 presence_info += f"**Web:** {status_emojis.get(user.web_status, '❓')}\n"
             
             # Current activity
-            if user.activity:
+            if hasattr(user, 'activity') and user.activity:
                 activity_type = {
                     discord.ActivityType.playing: "🎮 Playing",
                     discord.ActivityType.streaming: "📺 Streaming",
@@ -115,7 +119,8 @@ class PrivateUserInfoCommand(commands.Cog):
                     discord.ActivityType.custom: "💭 Custom Status",
                     discord.ActivityType.competing: "🏆 Competing in"
                 }
-                presence_info += f"**Activity:** {activity_type.get(user.activity.type, '❓')} {user.activity.name}\n"
+                activity_name = getattr(user.activity, 'name', 'Unknown Activity')
+                presence_info += f"**Activity:** {activity_type.get(user.activity.type, '❓')} {activity_name}\n"
                 
                 # Additional activity details
                 if hasattr(user.activity, 'details') and user.activity.details:
@@ -302,25 +307,51 @@ class PrivateUserInfoCommand(commands.Cog):
             )
         except Exception as e:
             self.logger.error(f"Unexpected error in privateuserinfo command: {e}")
-            await interaction.followup.send(
-                "❌ An unexpected error occurred while fetching user information.", 
-                ephemeral=True
-            )
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        "❌ An unexpected error occurred while fetching user information.", 
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        "❌ An unexpected error occurred while fetching user information.", 
+                        ephemeral=True
+                    )
+            except:
+                pass
     
-    @privateuserinfo.error
-    async def privateuserinfo_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
+    async def cog_app_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         """Handle command errors"""
-        if isinstance(error, commands.CommandOnCooldown):
-            await interaction.response.send_message(
-                f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
-                ephemeral=True
-            )
+        if isinstance(error, app_commands.CommandOnCooldown):
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        f"⏰ Command is on cooldown. Try again in {error.retry_after:.1f} seconds.",
+                        ephemeral=True
+                    )
+            except:
+                pass
         else:
             self.logger.error(f"Command error: {error}")
-            await interaction.response.send_message(
-                "❌ An error occurred while executing the command.",
-                ephemeral=True
-            )
+            try:
+                if not interaction.response.is_done():
+                    await interaction.response.send_message(
+                        "❌ An error occurred while executing the command.",
+                        ephemeral=True
+                    )
+                else:
+                    await interaction.followup.send(
+                        "❌ An error occurred while executing the command.",
+                        ephemeral=True
+                    )
+            except:
+                pass
 
 async def setup(bot):
     """Setup function for the cog"""
