@@ -8,3 +8,4 @@ requests
 PyNaCl
 utils
 asyncpg
+cogd
