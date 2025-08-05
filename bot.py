@@ -65,7 +65,13 @@ class AdvancedBot(commands.Bot):
             'cogs.connect4',
             'cogs.rpsgame',
             'cogs.coinflip',
-            'cogs.echo_command'
+            'cogs.echo_command',
+            'cogs.slowmode_command',
+            'cogs.lockdown_command',
+            'cogs.hangman_command',
+            'cogs.guessnumber_command',
+            'cogs.slots_command',
+            'cogs.ship_command'
         ]
         
         for cog in cogs:
