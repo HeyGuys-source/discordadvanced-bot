@@ -71,7 +71,8 @@ class AdvancedBot(commands.Bot):
             'cogs.hangman_command',
             'cogs.guessnumber_command',
             'cogs.slots_command',
-            'cogs.ship_command'
+            'cogs.ship_command',
+            'cogs.trigger_system'
         ]
         
         for cog in cogs:
