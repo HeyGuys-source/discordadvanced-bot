@@ -71,7 +71,9 @@ class AdvancedBot(commands.Bot):
             'cogs.discord_commands',
             'cogs.word_blacklist_commands'
             'cogs.userinfo',
-            'cogs.privateuserinfo'
+            'cogs.privateuserinfo',
+            'cogs.serverdisplay',
+            'cogd.avatardisplay'
         ]
         
         for cog in cogs:
