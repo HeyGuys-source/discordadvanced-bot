@@ -47,7 +47,7 @@ class AdvancedBot(commands.Bot):
             'cogs.moderation',
             'cogs.automod',
             'cogs.reaction_roles',
-            'cogs.custom_commands',
+   #         'cogs.custom_commands',
             'cogs.logging',
             'cogs.welcome',
             'cogs.starboard',
