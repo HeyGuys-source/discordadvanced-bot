@@ -73,7 +73,11 @@ class AdvancedBot(commands.Bot):
             'cogs.userinfo',
             'cogs.privateuserinfo',
             'cogs.serverdisplay',
-            'cogs.avatardisplay'
+            'cogs.avatardisplay',
+            'cogs.dice',
+            'cogs.connect4',
+            'cogs.rpsgame',
+            'cogs.coinflip'
         ]
         
         for cog in cogs:
