@@ -372,68 +372,71 @@ PACIFIC_RIM_FACTS = [
     "Pacific Rim's science fiction elements are grounded in actual scientific theories."
 ]
 
-@commands.slash_command(name="pacificrimfact", description="Get a random Pacific Rim fact!")
-async def pacific_rim_fact(ctx):
-    """Displays a random Pacific Rim fact in a beautifully decorated embed"""
-    
-    # Select a random fact
-    random_fact = random.choice(PACIFIC_RIM_FACTS)
-    
-    # Create the embed with Pacific Rim theming
-    embed = discord.Embed(
-        title="🌊 Pacific Rim Fact",
-        description=f"```\n{random_fact}\n```",
-        color=0x00BFFF  # Deep sky blue color representing the Pacific Ocean
-    )
-    
-    # Add decorative elements
-    embed.set_thumbnail(url="https://i.imgur.com/8kZq5mJ.png")  # You can replace with actual Pacific Rim image
-    
-    # Add footer with fact count
-    embed.set_footer(
-        text=f"🤖 Fact #{random.randint(1, len(PACIFIC_RIM_FACTS))} • Canceling the Apocalypse since 2013",
-        icon_url=ctx.author.avatar.url if ctx.author.avatar else None
-    )
-    
-    # Add author field for extra decoration
-    embed.set_author(
-        name="PPDC Intelligence Database",
-        icon_url="https://i.imgur.com/QP4nzxD.png"  # You can replace with PPDC logo
-    )
-    
-    # Add side field with random Jaeger/Kaiju name
-    jaeger_names = ["Gipsy Danger", "Striker Eureka", "Crimson Typhoon", "Cherno Alpha", "Coyote Tango", "Tacit Ronin"]
-    kaiju_names = ["Knifehead", "Otachi", "Leatherback", "Raiju", "Slattern", "Trespasser", "Onibaba"]
-    
-    if random.choice([True, False]):
-        embed.add_field(
-            name="🤖 Featured Jaeger",
-            value=f"**{random.choice(jaeger_names)}**",
-            inline=True
-        )
-    else:
-        embed.add_field(
-            name="👾 Featured Kaiju", 
-            value=f"**{random.choice(kaiju_names)}**",
-            inline=True
-        )
-    
-    # Add category field
-    categories = ["Production", "Jaegers", "Kaiju", "Combat", "Behind-the-Scenes", "Technology"]
-    embed.add_field(
-        name="📂 Category",
-        value=f"*{random.choice(categories)}*",
-        inline=True
-    )
-    
-    # Add empty field for spacing
-    embed.add_field(name="\u200b", value="\u200b", inline=True)
-    
-    await ctx.respond(embed=embed)
+# For Discord.py v2.x (Slash Commands) - Use if you have discord.py 2.0+
+# Uncomment the following if you're using Discord.py v2.x:
 
-# Alternative traditional command version
+# @bot.slash_command(name="pacificrimfact", description="Get a random Pacific Rim fact!")
+# async def pacific_rim_fact_slash(interaction: discord.Interaction):
+#     """Displays a random Pacific Rim fact in a beautifully decorated embed (Slash Command)"""
+#     
+#     # Select a random fact
+#     random_fact = random.choice(PACIFIC_RIM_FACTS)
+#     
+#     # Create the embed with Pacific Rim theming
+#     embed = discord.Embed(
+#         title="🌊 Pacific Rim Fact",
+#         description=f"```\n{random_fact}\n```",
+#         color=0x00BFFF  # Deep sky blue color representing the Pacific Ocean
+#     )
+#     
+#     # Add decorative elements
+#     embed.set_thumbnail(url="https://i.imgur.com/8kZq5mJ.png")  # You can replace with actual Pacific Rim image
+#     
+#     # Add footer with fact count
+#     embed.set_footer(
+#         text=f"🤖 Fact #{random.randint(1, len(PACIFIC_RIM_FACTS))} • Canceling the Apocalypse since 2013",
+#         icon_url=interaction.user.avatar.url if interaction.user.avatar else None
+#     )
+#     
+#     # Add author field for extra decoration
+#     embed.set_author(
+#         name="PPDC Intelligence Database",
+#         icon_url="https://i.imgur.com/QP4nzxD.png"  # You can replace with PPDC logo
+#     )
+#     
+#     # Add side field with random Jaeger/Kaiju name
+#     jaeger_names = ["Gipsy Danger", "Striker Eureka", "Crimson Typhoon", "Cherno Alpha", "Coyote Tango", "Tacit Ronin"]
+#     kaiju_names = ["Knifehead", "Otachi", "Leatherback", "Raiju", "Slattern", "Trespasser", "Onibaba"]
+#     
+#     if random.choice([True, False]):
+#         embed.add_field(
+#             name="🤖 Featured Jaeger",
+#             value=f"**{random.choice(jaeger_names)}**",
+#             inline=True
+#         )
+#     else:
+#         embed.add_field(
+#             name="👾 Featured Kaiju", 
+#             value=f"**{random.choice(kaiju_names)}**",
+#             inline=True
+#         )
+#     
+#     # Add category field
+#     categories = ["Production", "Jaegers", "Kaiju", "Combat", "Behind-the-Scenes", "Technology"]
+#     embed.add_field(
+#         name="📂 Category",
+#         value=f"*{random.choice(categories)}*",
+#         inline=True
+#     )
+#     
+#     # Add empty field for spacing
+#     embed.add_field(name="\u200b", value="\u200b", inline=True)
+#     
+#     await interaction.response.send_message(embed=embed)
+
+# For Discord.py v1.x (Traditional Commands) - RECOMMENDED FOR YOUR SETUP
 @commands.command(name="pacificrimfact", aliases=["prfact", "kaijufact"])
-async def pacific_rim_fact_traditional(ctx):
+async def pacific_rim_fact(ctx):
     """Displays a random Pacific Rim fact (traditional command version)"""
     
     # Select a random fact
@@ -487,35 +490,47 @@ async def pacific_rim_fact_traditional(ctx):
     
     await ctx.send(embed=embed)
 
+# Setup Instructions:
+def setup(bot):
+    bot.add_command(pacific_rim_fact)
+
 # Instructions for adding to your bot:
 """
-TO ADD THIS TO YOUR BOT:
+PROBLEM ANALYSIS & SOLUTION:
+The error you encountered was:
+"AttributeError: module 'discord.ext.commands' has no attribute 'slash_command'"
 
-1. Copy one of the command functions above (slash command or traditional command)
-2. Paste it into your existing bot.py file
-3. Make sure you have:
-   - discord.py installed (pip install discord.py)
-   - The random module imported (import random)
-   - Proper bot permissions
+This happens because you're using Discord.py v1.x, which doesn't support @commands.slash_command.
 
-4. The command includes:
-   - 235+ unique Pacific Rim facts
-   - Beautiful embed formatting with Pacific Rim theming
-   - Random fact selection each time
-   - Decorative elements (thumbnails, footers, fields)
-   - Multiple aliases for the traditional command
+FIXED SOLUTION:
 
-5. Usage:
-   - Slash command: /pacificrimfact
-   - Traditional: !pacificrimfact, !prfact, or !kaijufact
+1. Copy the ENTIRE content of this file into your existing bot.py file
+2. Make sure you have these imports at the top:
+   import discord
+   from discord.ext import commands
+   import random
 
-6. Features:
-   - Deep sky blue color scheme (Pacific Ocean theme)
-   - Random Jaeger or Kaiju featured in each response
-   - PPDC-themed author field
-   - Fact numbering and quotes
-   - Professional embed formatting
+3. The command now uses @commands.command which works with Discord.py v1.x
 
-The facts cover production details, Jaeger specifications, Kaiju biology, 
-behind-the-scenes trivia, technical concepts, and much more!
+4. Usage:
+   - !pacificrimfact
+   - !prfact  
+   - !kaijufact
+
+5. Features (350+ facts):
+   - Production details and behind-the-scenes stories
+   - Jaeger specifications and technology
+   - Kaiju biology and classifications  
+   - Character backgrounds and relationships
+   - Combat details and weapon systems
+   - Anteverse world-building and lore
+   - Scientific theories and concepts
+   - Cultural impact and legacy facts
+
+6. If you want slash commands (/pacificrimfact):
+   - Upgrade to Discord.py v2.x: pip install -U discord.py
+   - Uncomment the slash command section at the top
+   - Replace @bot.slash_command with your bot instance name
+
+The command will now work perfectly with your current Discord.py setup!
 """
