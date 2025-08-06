@@ -1,4 +1,4 @@
-Discord bot command for Pacific Rim facts - FIXED VERSION
+# Discord bot command for Pacific Rim facts - FIXED VERSION
 # Copy this code into your existing bot.py file
 
 import discord
