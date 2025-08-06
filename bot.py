@@ -74,7 +74,8 @@ class AdvancedBot(commands.Bot):
             'cogs.ship_command',
             'cogs.trigger_system',
             'cogs.eightball_command',
-            'cogs.godzillafact_command'
+            'cogs.godzillafact_command',
+            'cogs.discord_rules_command'
         ]
         
         for cog in cogs:
