@@ -73,7 +73,8 @@ class AdvancedBot(commands.Bot):
             'cogs.slots_command',
             'cogs.ship_command',
             'cogs.trigger_system',
-            'cogs.eightball_command'
+            'cogs.eightball_command',
+            'cogs.godzillafact_command'
         ]
         
         for cog in cogs:
