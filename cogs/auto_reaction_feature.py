@@ -17,6 +17,10 @@ class AutoReactionFeature(commands.Cog):
         self.bot = bot
         # Target channel ID where reactions should be added
         self.target_channel_id = 1397275881008791723
+        self.target_channel_id = 1397276528873701448
+        self.target_channel_id = 1397276442848395576
+        
+        
         
         # Custom emoji IDs - these will be converted to proper emoji objects
         self.thumbs_up_emoji_id = 1402566034510188636
