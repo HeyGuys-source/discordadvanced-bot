@@ -16,8 +16,8 @@ class AutoReactionFeature(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         # Target channel ID where reactions should be added
-        self.target_channel_id = 1397275881008791723
-        self.target_channel_id = 1397276528873701448
+        self.target_channel_id = 1397275881008791723,
+        self.target_channel_id = 1397276528873701448,
         self.target_channel_id = 1397276442848395576
         
         
