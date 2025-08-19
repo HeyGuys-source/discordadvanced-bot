@@ -76,7 +76,7 @@ class PartnershipAnnouncer(commands.Cog):
         self.partnership_announcement_loop.cancel()
         logger.info("Partnership announcement loop stopped")
 
-    @tasks.loop(minutes=20)
+    @tasks.loop(minutes=50)
     async def partnership_announcement_loop(self):
         """
         Task loop that runs every 20 minutes to send partnership announcements.
