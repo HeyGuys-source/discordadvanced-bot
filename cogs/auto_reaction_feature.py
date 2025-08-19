@@ -15,12 +15,12 @@ class AutoReactionFeature(commands.Cog):
     
     def __init__(self, bot):
         self.bot = bot
-        # Target channel ID where reactions should be added
-        self.target_channel_id = 1397275881008791723,
-        self.target_channel_id = 1397276528873701448,
-        self.target_channel_id = 1397276442848395576
-        
-        
+        # Target channel IDs where reactions should be added
+        self.target_channel_ids = [
+            1397275881008791723,
+            1397276528873701448,
+            1397276442848395576
+        ]
         
         # Custom emoji IDs - these will be converted to proper emoji objects
         self.thumbs_up_emoji_id = 1402566034510188636
@@ -74,8 +74,8 @@ class AutoReactionFeature(commands.Cog):
             if message.author == self.bot.user:
                 return
             
-            # Check if message is in the target channel
-            if message.channel.id != self.target_channel_id:
+            # Check if message is in one of the target channels
+            if message.channel.id not in self.target_channel_ids:
                 return
             
             # Ensure emojis are available
@@ -132,11 +132,12 @@ class AutoReactionFeature(commands.Cog):
         Admin command to test if the reaction feature is working.
         """
         try:
-            if ctx.channel.id == self.target_channel_id:
+            if ctx.channel.id in self.target_channel_ids:
                 await ctx.send("Testing reactions in target channel...")
                 # The on_message event will handle adding reactions to this message
             else:
-                await ctx.send(f"This command should be used in the target channel: <#{self.target_channel_id}>")
+                channel_mentions = " ".join([f"<#{channel_id}>" for channel_id in self.target_channel_ids])
+                await ctx.send(f"This command should be used in one of the target channels: {channel_mentions}")
         except Exception as e:
             logger.error(f"Error in test_reactions command: {e}")
             await ctx.send("An error occurred while testing reactions.")
@@ -149,7 +150,7 @@ class AutoReactionFeature(commands.Cog):
         """
         try:
             status_msg = "**Auto Reaction Feature Status:**\n"
-            status_msg += f"Target Channel ID: {self.target_channel_id}\n"
+            status_msg += f"Target Channel IDs: {', '.join(map(str, self.target_channel_ids))}\n"
             status_msg += f"Thumbs Up Emoji: {'✅ Loaded' if self.thumbs_up_emoji else '❌ Not Found'}\n"
             status_msg += f"Thumbs Down Emoji: {'✅ Loaded' if self.thumbs_down_emoji else '❌ Not Found'}\n"
             
