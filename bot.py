@@ -78,7 +78,8 @@ class AdvancedBot(commands.Bot):
             'cogs.discord_rules_command',
             'cogs.discord_pacificrimfact_command',
             'cogs.auto_reaction_feature',
-            'cogs.welcome_feature'
+            'cogs.welcome_feature',
+            'cogs.partnership_announcer'
         ]
         
         for cog in cogs:
