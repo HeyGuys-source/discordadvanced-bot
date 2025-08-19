@@ -77,7 +77,8 @@ class AdvancedBot(commands.Bot):
             'cogs.godzillafact_command',
             'cogs.discord_rules_command',
             'cogs.discord_pacificrimfact_command',
-            'cogs.auto_reaction_feature'
+            'cogs.auto_reaction_feature',
+            'cogs.welcome_feature'
         ]
         
         for cog in cogs:
