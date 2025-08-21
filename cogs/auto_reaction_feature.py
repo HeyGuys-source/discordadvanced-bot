@@ -19,7 +19,8 @@ class AutoReactionFeature(commands.Cog):
         self.target_channel_ids = [
             1397275881008791723,
             1397276528873701448,
-            1397276442848395576
+            1397276442848395576,
+            1407895335711408209
         ]
         
         # Custom emoji IDs - these will be converted to proper emoji objects
