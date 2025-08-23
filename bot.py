@@ -83,7 +83,8 @@ class AdvancedBot(commands.Bot):
             'cogs.welcome_feature',
             'cogs.partnership_announcer',
             'cogs.keepalive',
-            'cogs.alt_detection'
+            'cogs.alt_detection',
+            'cogs.health_monitor'
         ]
         
         for cog in cogs:
