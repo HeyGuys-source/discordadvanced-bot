@@ -148,7 +148,77 @@ class Database:
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
-    
+
+            await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_members (
+                id INTEGER PRIMARY KEY,
+                guild_id INTEGER,
+                username TEXT NOT NULL,
+                display_name TEXT,
+                discriminator TEXT,
+                created_at TIMESTAMP NOT NULL,
+                joined_at TIMESTAMP,
+                avatar_url TEXT,
+                is_bot BOOLEAN DEFAULT 0,
+                roles TEXT,
+                premium_since TIMESTAMP,
+                status TEXT,
+                message_count_7d INTEGER DEFAULT 0,
+                message_count_30d INTEGER DEFAULT 0,
+                channels_used INTEGER DEFAULT 0,
+                avg_message_length REAL DEFAULT 0,
+                reaction_count INTEGER DEFAULT 0,
+                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        # Alt Detection - Analysis results
+        await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_analysis_results (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                guild_id INTEGER,
+                member_ids TEXT NOT NULL,
+                confidence_score INTEGER NOT NULL,
+                evidence TEXT NOT NULL,
+                analysis_type TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        # Alt Detection - Pattern cache
+        await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_pattern_cache (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                guild_id INTEGER,
+                pattern_type TEXT NOT NULL,
+                pattern_data TEXT NOT NULL,
+                expires_at TIMESTAMP NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
+        # Alt Detection - Message timing
+        await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_message_timing (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                guild_id INTEGER,
+                member_id INTEGER,
+                channel_id INTEGER,
+                message_timestamp TIMESTAMP NOT NULL,
+                message_length INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
+        # Create indexes for alt detection tables
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_guild_id ON alt_members(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_created_at ON alt_members(created_at)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_guild_id ON alt_analysis_results(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_confidence ON alt_analysis_results(confidence_score)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_pattern_guild_type ON alt_pattern_cache(guild_id, pattern_type)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_member_id ON alt_message_timing(member_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_guild_id ON alt_message_timing(guild_id)')
+        
     async def init_guild(self, guild_id: int):
         """Initialize a guild in the database"""
         await self.conn.execute('''
