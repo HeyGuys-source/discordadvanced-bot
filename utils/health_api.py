@@ -4,15 +4,17 @@ import threading
 import logging
 from datetime import datetime
 import json
+import os
 
 logger = logging.getLogger(__name__)
 
 class HealthAPI:
     """Flask API for health monitoring and UptimeRobot integration."""
     
-    def __init__(self, bot, port=8080):
+    def __init__(self, bot, port=None):
         self.bot = bot
-        self.port = port
+        # Use Render's PORT environment variable or default to 8080
+        self.port = port or int(os.environ.get('PORT', 8080))
         self.app = Flask(__name__)
         self.setup_routes()
         self.server_thread = None
@@ -145,9 +147,10 @@ class HealthAPI:
         def trigger_recovery():
             """Endpoint to trigger manual recovery (requires authentication)."""
             try:
-                # Simple authentication check
+                # Simple authentication check using environment variable
                 auth_header = request.headers.get('Authorization')
-                if not auth_header or auth_header != 'Bearer your-secret-key-here':
+                expected_token = os.environ.get('RECOVERY_AUTH_TOKEN', 'your-secret-key-here')
+                if not auth_header or auth_header != f'Bearer {expected_token}':
                     return jsonify({'error': 'Unauthorized'}), 401
                 
                 health_cog = self.bot.get_cog('HealthMonitor')
