@@ -83,7 +83,7 @@ class Database:
         ''')
         
         # Custom commands
-        await self.conn.execute('''
+        await self.conn.execute(''')
             CREATE TABLE IF NOT EXISTS custom_commands (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 guild_id INTEGER,
@@ -149,7 +149,7 @@ class Database:
             )
         ''')
 
-            await self.conn.execute('''
+            await self.conn.execute(''')
             CREATE TABLE IF NOT EXISTS alt_members (
                 id INTEGER PRIMARY KEY,
                 guild_id INTEGER,
