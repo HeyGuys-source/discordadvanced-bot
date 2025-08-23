@@ -10,3 +10,4 @@ utils
 asyncpg
 fuzzywuzzy
 python-levenshtein
+psutil
