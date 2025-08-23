@@ -1,5 +1,7 @@
 # keep_alive.py
 import logging
+from utils.health_api import HealthAPI
+from utils.error_handler import setup_error_handler
 import asyncio
 import discord
 from discord.ext import commands
