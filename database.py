@@ -149,7 +149,7 @@ class Database:
             )
         ''')
 
-            await self.conn.execute(''')
+            await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS alt_members (
                 id INTEGER PRIMARY KEY,
                 guild_id INTEGER,
