@@ -1,4 +1,4 @@
-import sqlite3
+import aiosqlite
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -10,18 +10,20 @@ logger = logging.getLogger(__name__)
 class AltDetectionDB:
     """Database handler for alt detection data storage and retrieval."""
     
-    def __init__(self, db_path: str = "alt_detection.db"):
-        self.db_path = db_path
-        self.connection = None
+    def __init__(self, existing_db_connection=None):
+        """Initialize with existing database connection or create new one."""
+        self.conn = existing_db_connection
+        self.own_connection = existing_db_connection is None
         
-    async def initialize(self):
-        """Initialize the database and create necessary tables."""
+    async def initialize(self, db_path: str = "alt_detection.db"):
+        """Initialize the database connection if not provided."""
         try:
-            self.connection = sqlite3.connect(self.db_path)
-            self.connection.row_factory = sqlite3.Row
-            
-            await self._create_tables()
-            logger.info("Alt detection database initialized successfully")
+            if self.own_connection:
+                self.conn = await aiosqlite.connect(db_path)
+                await self._create_tables()
+                logger.info("Alt detection database initialized successfully")
+            else:
+                logger.info("Using existing database connection for alt detection")
             
         except Exception as e:
             logger.error(f"Error initializing database: {e}")
@@ -29,23 +31,22 @@ class AltDetectionDB:
     
     async def _create_tables(self):
         """Create database tables for storing member and analysis data."""
-        if not self.connection:
+        if not self.conn:
             raise RuntimeError("Database connection not initialized")
-        cursor = self.connection.cursor()
         
-        # Members table for storing comprehensive member data
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS members (
+        # Alt Detection - Members cache
+        await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_members (
                 id INTEGER PRIMARY KEY,
-                guild_id INTEGER NOT NULL,
+                guild_id INTEGER,
                 username TEXT NOT NULL,
                 display_name TEXT,
                 discriminator TEXT,
                 created_at TIMESTAMP NOT NULL,
                 joined_at TIMESTAMP,
                 avatar_url TEXT,
-                is_bot BOOLEAN DEFAULT FALSE,
-                roles TEXT,  -- JSON array of role IDs
+                is_bot BOOLEAN DEFAULT 0,
+                roles TEXT,
                 premium_since TIMESTAMP,
                 status TEXT,
                 message_count_7d INTEGER DEFAULT 0,
@@ -55,78 +56,66 @@ class AltDetectionDB:
                 reaction_count INTEGER DEFAULT 0,
                 last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
-        """)
+        ''')
         
-        # Create indexes separately
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_members_guild_id ON members(guild_id)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_members_created_at ON members(created_at)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_members_joined_at ON members(joined_at)")
-        
-        # Analysis results table for storing detection results
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS analysis_results (
+        # Alt Detection - Analysis results
+        await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_analysis_results (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER NOT NULL,
-                member_ids TEXT NOT NULL,  -- JSON array of member IDs
+                guild_id INTEGER,
+                member_ids TEXT NOT NULL,
                 confidence_score INTEGER NOT NULL,
-                evidence TEXT NOT NULL,   -- JSON array of evidence
+                evidence TEXT NOT NULL,
                 analysis_type TEXT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
-        """)
+        ''')
         
-        # Create indexes separately
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_analysis_guild_id ON analysis_results(guild_id)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_analysis_confidence ON analysis_results(confidence_score)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_analysis_created_at ON analysis_results(created_at)")
-        
-        # Pattern cache table for storing detected patterns
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS pattern_cache (
+        # Alt Detection - Pattern cache
+        await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_pattern_cache (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER NOT NULL,
+                guild_id INTEGER,
                 pattern_type TEXT NOT NULL,
-                pattern_data TEXT NOT NULL,  -- JSON data
+                pattern_data TEXT NOT NULL,
                 expires_at TIMESTAMP NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
-        """)
+        ''')
         
-        # Create indexes separately
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_pattern_guild_type ON pattern_cache(guild_id, pattern_type)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_pattern_expires_at ON pattern_cache(expires_at)")
-        
-        # Message timing table for behavioral analysis
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS message_timing (
+        # Alt Detection - Message timing
+        await self.conn.execute('''
+            CREATE TABLE IF NOT EXISTS alt_message_timing (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                member_id INTEGER NOT NULL,
-                guild_id INTEGER NOT NULL,
-                channel_id INTEGER NOT NULL,
+                guild_id INTEGER,
+                member_id INTEGER,
+                channel_id INTEGER,
                 message_timestamp TIMESTAMP NOT NULL,
                 message_length INTEGER DEFAULT 0,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
-        """)
+        ''')
+
+        # Create indexes for alt detection tables
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_guild_id ON alt_members(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_created_at ON alt_members(created_at)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_guild_id ON alt_analysis_results(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_confidence ON alt_analysis_results(confidence_score)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_pattern_guild_type ON alt_pattern_cache(guild_id, pattern_type)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_member_id ON alt_message_timing(member_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_guild_id ON alt_message_timing(guild_id)')
         
-        # Create indexes separately
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_timing_member_id ON message_timing(member_id)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_timing_guild_id ON message_timing(guild_id)")
-        cursor.execute("CREATE INDEX IF NOT EXISTS idx_timing_timestamp ON message_timing(message_timestamp)")
-        
-        self.connection.commit()
-        logger.info("Database tables created/verified successfully")
+        await self.conn.commit()
+        logger.info("Alt detection tables created/verified successfully")
     
     async def store_member_batch(self, guild_id: int, members: List[Dict]):
         """Store a batch of member data efficiently."""
-        if not members or not self.connection:
+        if not members or not self.conn:
             return
-        
-        cursor = self.connection.cursor()
         
         try:
             # Clear existing data for the guild
-            cursor.execute("DELETE FROM members WHERE guild_id = ?", (guild_id,))
+            await self.conn.execute("DELETE FROM alt_members WHERE guild_id = ?", (guild_id,))
             
             # Prepare member data for insertion
             member_data = []
@@ -154,8 +143,8 @@ class AltDetectionDB:
                 ))
             
             # Batch insert
-            cursor.executemany("""
-                INSERT OR REPLACE INTO members (
+            await self.conn.executemany("""
+                INSERT OR REPLACE INTO alt_members (
                     id, guild_id, username, display_name, discriminator,
                     created_at, joined_at, avatar_url, is_bot, roles,
                     premium_since, status, message_count_7d, message_count_30d,
@@ -177,51 +166,49 @@ class AltDetectionDB:
                         ))
             
             if timing_data:
-                cursor.executemany("""
-                    INSERT INTO message_timing (
+                await self.conn.executemany("""
+                    INSERT INTO alt_message_timing (
                         member_id, guild_id, channel_id, message_timestamp, message_length
                     ) VALUES (?, ?, ?, ?, ?)
                 """, timing_data)
             
-            self.connection.commit()
+            await self.conn.commit()
             logger.info(f"Stored data for {len(members)} members in guild {guild_id}")
             
         except Exception as e:
-            self.connection.rollback()
+            await self.conn.rollback()
             logger.error(f"Error storing member batch: {e}")
             raise
     
     async def get_guild_members(self, guild_id: int) -> List[Dict]:
         """Retrieve all members for a guild."""
-        if not self.connection:
+        if not self.conn:
             return []
-        cursor = self.connection.cursor()
         
         try:
-            cursor.execute("""
-                SELECT * FROM members WHERE guild_id = ?
+            async with self.conn.execute("""
+                SELECT * FROM alt_members WHERE guild_id = ?
                 ORDER BY created_at ASC
-            """, (guild_id,))
-            
-            rows = cursor.fetchall()
-            members = []
-            
-            for row in rows:
-                member_data = dict(row)
-                # Parse JSON fields
-                if member_data['roles']:
-                    member_data['roles'] = json.loads(member_data['roles'])
-                else:
-                    member_data['roles'] = []
+            """, (guild_id,)) as cursor:
+                rows = await cursor.fetchall()
+                members = []
                 
-                # Parse datetime fields
-                for field in ['created_at', 'joined_at', 'premium_since']:
-                    if member_data[field]:
-                        member_data[field] = datetime.fromisoformat(member_data[field])
+                for row in rows:
+                    member_data = dict(row)
+                    # Parse JSON fields
+                    if member_data['roles']:
+                        member_data['roles'] = json.loads(member_data['roles'])
+                    else:
+                        member_data['roles'] = []
+                    
+                    # Parse datetime fields
+                    for field in ['created_at', 'joined_at', 'premium_since']:
+                        if member_data[field]:
+                            member_data[field] = datetime.fromisoformat(member_data[field])
+                    
+                    members.append(member_data)
                 
-                members.append(member_data)
-            
-            return members
+                return members
             
         except Exception as e:
             logger.error(f"Error retrieving guild members: {e}")
@@ -361,8 +348,8 @@ class AltDetectionDB:
         except Exception as e:
             logger.error(f"Error during database cleanup: {e}")
     
-    def close(self):
-        """Close the database connection."""
-        if self.connection:
-            self.connection.close()
-            logger.info("Database connection closed")
+    async def close(self):
+        """Close the database connection if we own it."""
+        if self.own_connection and self.conn:
+            await self.conn.close()
+            logger.info("Alt detection database connection closed")
