@@ -9,6 +9,16 @@ import os
 from aiohttp import web
 from database import Database
 from config import Config
+from render_health_setup import setup_render_health_monitoring
+
+@bot.event
+async def on_ready():
+    print(f'{bot.user} has connected to Discord!')
+    
+    # Add this line:
+    await setup_render_health_monitoring(bot)
+    
+    print('Health monitoring active!')
 
 # Configure logging
 logging.basicConfig(
