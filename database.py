@@ -23,8 +23,7 @@ class Database:
         await self.conn.commit()
         logging.info('Database initialized')
     
-    async def _create_tables(self):
-        """Create all required database         # Guild settings
+    async def _create_tables(        # Guild settings
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS guild_settings (
                 guild_id INTEGER PRIMARY KEY,
@@ -51,8 +50,7 @@ class Database:
                 action TEXT NOT NULL,
                 reason TEXT,
                 duration INTEGER,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -64,8 +62,7 @@ class Database:
                 user_id INTEGER NOT NULL,
                 moderator_id INTEGER NOT NULL,
                 reason TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -78,13 +75,11 @@ class Database:
                 channel_id INTEGER NOT NULL,
                 role_id INTEGER NOT NULL,
                 emoji TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
-                UNIQUE(message_id, emoji)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
-        # Custom commands - FIXED: Removed extra parenthesis
+        # Custom commands
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS custom_commands (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -93,9 +88,7 @@ class Database:
                 response TEXT NOT NULL,
                 created_by INTEGER NOT NULL,
                 uses INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
-                UNIQUE(guild_id, trigger)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -108,8 +101,7 @@ class Database:
                 violation_type TEXT NOT NULL,
                 content TEXT,
                 action_taken TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -123,8 +115,7 @@ class Database:
                 channel_id INTEGER NOT NULL,
                 author_id INTEGER NOT NULL,
                 star_count INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -138,7 +129,6 @@ class Database:
                 level INTEGER DEFAULT 1,
                 total_xp INTEGER DEFAULT 0,
                 last_message TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
                 UNIQUE(guild_id, user_id)
             )
         ''')
@@ -152,12 +142,11 @@ class Database:
                 user_id INTEGER,
                 channel_id INTEGER,
                 data TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
 
-        # Alt Detection - Members - FIXED: Corrected indentation
+        # Alt Detection - Members
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS alt_members (
                 id INTEGER PRIMARY KEY,
@@ -177,8 +166,7 @@ class Database:
                 channels_used INTEGER DEFAULT 0,
                 avg_message_length REAL DEFAULT 0,
                 reaction_count INTEGER DEFAULT 0,
-                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -188,11 +176,10 @@ class Database:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 guild_id INTEGER NOT NULL,
                 member_ids TEXT NOT NULL,
-                confidence_score INTEGER NOT NULL CHECK(confidence_score >= 0 AND confidence_score <= 100),
+                confidence_score INTEGER NOT NULL,
                 evidence TEXT NOT NULL,
                 analysis_type TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -204,8 +191,7 @@ class Database:
                 pattern_type TEXT NOT NULL,
                 pattern_data TEXT NOT NULL,
                 expires_at TIMESTAMP NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         
@@ -218,55 +204,19 @@ class Database:
                 channel_id INTEGER NOT NULL,
                 message_timestamp TIMESTAMP NOT NULL,
                 message_length INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
-                FOREIGN KEY (member_id) REFERENCES alt_members(id)
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
 
-        # Create indexes for better performance
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_guild_settings_guild_id ON guild_settings(guild_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_moderation_logs_guild_id ON moderation_logs(guild_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_moderation_logs_user_id ON moderation_logs(user_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_warnings_guild_user ON warnings(guild_id, user_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_reaction_roles_message ON reaction_roles(message_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_custom_commands_guild_trigger ON custom_commands(guild_id, trigger)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_automod_violations_guild_id ON automod_violations(guild_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_starboard_entries_guild_id ON starboard_entries(guild_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_user_levels_guild_user ON user_levels(guild_id, user_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_event_logs_guild_id ON event_logs(guild_id)')
+        # Create indexes
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_guild_id ON alt_members(guild_id)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_created_at ON alt_members(created_at)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_guild_id ON alt_analysis_results(guild_id)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_confidence ON alt_analysis_results(confidence_score)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_pattern_guild_type ON alt_pattern_cache(guild_id, pattern_type)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_member_id ON alt_message_timing(member_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_guild_id ON alt_message_timing(guild_id)')      
-    async def init_guild(self, guild_id: int):
-        """Initialize a guild in the database"""
-        await self.conn.execute('''
-            INSERT OR IGNORE INTO guild_settings (guild_id) VALUES (?)
-        ''', (guild_id,))
-        await self.conn.commit()
-    
-    # Guild settings methods
-    async def get_guild_settings(self, guild_id: int) -> Optional[Dict[str, Any]]:
-        """Get guild settings"""
-        cursor = await self.conn.execute('''
-            SELECT * FROM guild_settings WHERE guild_id = ?
-        ''', (guild_id,))
-        row = await cursor.fetchone()
-        
-        if row:
-            columns = [desc[0] for desc in cursor.description]
-            return dict(zip(columns, row))
-        return None
-    
-    async def update_guild_setting(self, guild_id: int, setting: str, value: Any):
-        """Update a specific guild setting"""
-        await self.conn.execute(f'''
-            UPDATE guild_settings SET {setting} = ? WHERE guild_id = ?
-        ''', (value, guild_id))
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_guild_id ON alt_message_timing(guild_id)')
+
         await self.conn.commit()
     
     # Moderation methods
