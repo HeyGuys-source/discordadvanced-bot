@@ -91,7 +91,7 @@ class AdvancedBot(commands.Bot):
             'cogs.auto_reaction_feature',
             'cogs.welcome_feature',
             'cogs.partnership_announcer',
-            'cogs.keep-alive',
+            'cogs.keepalive',
             'cogs.alt_detection',
             'cogs.health_monitor'
         ]
@@ -204,4 +204,4 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 async def on_message(message):
     await bot.process_commands(message)
 
-bot.run("YOUR_TOKEN")
+bot.run("MTM3ODkxNzUyMTgzODgzNzgxMA.GlqVkM.S8qXLIkS6WvU_dZnL_Xrrz3JRFmiosR50s3DN0")
