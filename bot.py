@@ -91,7 +91,7 @@ class AdvancedBot(commands.Bot):
             'cogs.auto_reaction_feature',
             'cogs.welcome_feature',
             'cogs.partnership_announcer',
-            'cogs.keepalive',
+            'cogs.keep-alive',
             'cogs.alt_detection',
             'cogs.health_monitor'
         ]
