@@ -23,7 +23,7 @@ class Database:
         await self.conn.commit()
         logging.info('Database initialized')
     
-    async def _create_tables(        # Guild settings
+    async def _create_tables(self):    # Guild settings
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS guild_settings (
                 guild_id INTEGER PRIMARY KEY,
