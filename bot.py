@@ -1,6 +1,4 @@
 import logging
-from utils.health_api import HealthAPI
-from utils.error_handler import setup_error_handler
 import asyncio
 import discord
 from discord.ext import commands
@@ -9,15 +7,6 @@ from aiohttp import web
 from database import Database
 from config import Config
 # from render_health_setup import setup_render_health_monitoring
-# Create bot instance
-intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
-bot = commands.Bot(command_prefix='!', intents=intents)
-@bot.event
-async def on_ready():
-    print(f'{bot.user} has connected to Discord!')
-    print('Bot is ready!')
     
 # Configure logging
 logging.basicConfig(
@@ -91,9 +80,8 @@ class AdvancedBot(commands.Bot):
             'cogs.auto_reaction_feature',
             'cogs.welcome_feature',
             'cogs.partnership_announcer',
-            'cogs.keepalive',
-            'cogs.alt_detection',
-            'cogs.health_monitor'
+          #  'cogs.keepalive',
+            'cogs.alt_detection'
         ]
         
         for cog in cogs:
@@ -171,7 +159,7 @@ async def main():
     
     def run_dashboard():
         app = create_app(bot)
-        app.run(host='0.0.0.0', port=8080, debug=False, threaded=True)
+        app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
     
     dashboard_thread = threading.Thread(target=run_dashboard)
     dashboard_thread.daemon = True
