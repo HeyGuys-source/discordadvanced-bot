@@ -24,9 +24,7 @@ class Database:
         logging.info('Database initialized')
     
     async def _create_tables(self):
-        """Create all required database tables"""
-        
-        # Guild settings
+        """Create all required database         # Guild settings
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS guild_settings (
                 guild_id INTEGER PRIMARY KEY,
@@ -47,13 +45,14 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS moderation_logs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                user_id INTEGER,
-                moderator_id INTEGER,
-                action TEXT,
+                guild_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
+                moderator_id INTEGER NOT NULL,
+                action TEXT NOT NULL,
                 reason TEXT,
                 duration INTEGER,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
         
@@ -61,11 +60,12 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS warnings (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                user_id INTEGER,
-                moderator_id INTEGER,
+                guild_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
+                moderator_id INTEGER NOT NULL,
                 reason TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
         
@@ -73,25 +73,29 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS reaction_roles (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                message_id INTEGER,
-                channel_id INTEGER,
-                role_id INTEGER,
-                emoji TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                guild_id INTEGER NOT NULL,
+                message_id INTEGER NOT NULL,
+                channel_id INTEGER NOT NULL,
+                role_id INTEGER NOT NULL,
+                emoji TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
+                UNIQUE(message_id, emoji)
             )
         ''')
         
-        # Custom commands
-        await self.conn.execute(''')
+        # Custom commands - FIXED: Removed extra parenthesis
+        await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS custom_commands (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                trigger TEXT,
-                response TEXT,
-                created_by INTEGER,
+                guild_id INTEGER NOT NULL,
+                trigger TEXT NOT NULL,
+                response TEXT NOT NULL,
+                created_by INTEGER NOT NULL,
                 uses INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
+                UNIQUE(guild_id, trigger)
             )
         ''')
         
@@ -99,12 +103,13 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS automod_violations (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                user_id INTEGER,
-                violation_type TEXT,
+                guild_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
+                violation_type TEXT NOT NULL,
                 content TEXT,
-                action_taken TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                action_taken TEXT NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
         
@@ -112,13 +117,14 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS starboard_entries (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                original_message_id INTEGER UNIQUE,
+                guild_id INTEGER NOT NULL,
+                original_message_id INTEGER UNIQUE NOT NULL,
                 starboard_message_id INTEGER,
-                channel_id INTEGER,
-                author_id INTEGER,
+                channel_id INTEGER NOT NULL,
+                author_id INTEGER NOT NULL,
                 star_count INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
         
@@ -126,12 +132,13 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS user_levels (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                user_id INTEGER,
+                guild_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
                 xp INTEGER DEFAULT 0,
                 level INTEGER DEFAULT 1,
                 total_xp INTEGER DEFAULT 0,
                 last_message TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
                 UNIQUE(guild_id, user_id)
             )
         ''')
@@ -140,19 +147,21 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS event_logs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                event_type TEXT,
+                guild_id INTEGER NOT NULL,
+                event_type TEXT NOT NULL,
                 user_id INTEGER,
                 channel_id INTEGER,
                 data TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
 
-            await self.conn.execute('''
+        # Alt Detection - Members - FIXED: Corrected indentation
+        await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS alt_members (
                 id INTEGER PRIMARY KEY,
-                guild_id INTEGER,
+                guild_id INTEGER NOT NULL,
                 username TEXT NOT NULL,
                 display_name TEXT,
                 discriminator TEXT,
@@ -168,7 +177,8 @@ class Database:
                 channels_used INTEGER DEFAULT 0,
                 avg_message_length REAL DEFAULT 0,
                 reaction_count INTEGER DEFAULT 0,
-                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
         
@@ -176,12 +186,13 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS alt_analysis_results (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
+                guild_id INTEGER NOT NULL,
                 member_ids TEXT NOT NULL,
-                confidence_score INTEGER NOT NULL,
+                confidence_score INTEGER NOT NULL CHECK(confidence_score >= 0 AND confidence_score <= 100),
                 evidence TEXT NOT NULL,
                 analysis_type TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
         
@@ -189,11 +200,12 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS alt_pattern_cache (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
+                guild_id INTEGER NOT NULL,
                 pattern_type TEXT NOT NULL,
                 pattern_data TEXT NOT NULL,
                 expires_at TIMESTAMP NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id)
             )
         ''')
         
@@ -201,24 +213,35 @@ class Database:
         await self.conn.execute('''
             CREATE TABLE IF NOT EXISTS alt_message_timing (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                guild_id INTEGER,
-                member_id INTEGER,
-                channel_id INTEGER,
+                guild_id INTEGER NOT NULL,
+                member_id INTEGER NOT NULL,
+                channel_id INTEGER NOT NULL,
                 message_timestamp TIMESTAMP NOT NULL,
                 message_length INTEGER DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (guild_id) REFERENCES guild_settings(guild_id),
+                FOREIGN KEY (member_id) REFERENCES alt_members(id)
             )
         ''')
 
-        # Create indexes for alt detection tables
+        # Create indexes for better performance
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_guild_settings_guild_id ON guild_settings(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_moderation_logs_guild_id ON moderation_logs(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_moderation_logs_user_id ON moderation_logs(user_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_warnings_guild_user ON warnings(guild_id, user_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_reaction_roles_message ON reaction_roles(message_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_custom_commands_guild_trigger ON custom_commands(guild_id, trigger)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_automod_violations_guild_id ON automod_violations(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_starboard_entries_guild_id ON starboard_entries(guild_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_user_levels_guild_user ON user_levels(guild_id, user_id)')
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_event_logs_guild_id ON event_logs(guild_id)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_guild_id ON alt_members(guild_id)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_members_created_at ON alt_members(created_at)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_guild_id ON alt_analysis_results(guild_id)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_analysis_confidence ON alt_analysis_results(confidence_score)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_pattern_guild_type ON alt_pattern_cache(guild_id, pattern_type)')
         await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_member_id ON alt_message_timing(member_id)')
-        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_guild_id ON alt_message_timing(guild_id)')
-        
+        await self.conn.execute('CREATE INDEX IF NOT EXISTS idx_alt_timing_guild_id ON alt_message_timing(guild_id)')      
     async def init_guild(self, guild_id: int):
         """Initialize a guild in the database"""
         await self.conn.execute('''
