@@ -9,7 +9,7 @@ import os
 from aiohttp import web
 from database import Database
 from config import Config
-from render_health_setup import setup_render_health_monitoring
+# from render_health_setup import setup_render_health_monitoring
 
 @bot.event
 async def on_ready():
