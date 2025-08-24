@@ -6,7 +6,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import List, Dict, Tuple, Optional
 import sqlite3
-from utils.database import AltDetectionDB
+from database import AltDetectionDB
 from utils.analysis import BehavioralAnalyzer
 from utils.patterns import PatternDetector
 from config import EXCLUDED_CHANNELS
