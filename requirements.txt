@@ -11,4 +11,3 @@ asyncpg
 fuzzywuzzy
 python-levenshtein
 psutil
-utils.database
