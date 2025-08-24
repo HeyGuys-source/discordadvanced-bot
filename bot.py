@@ -204,4 +204,4 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 async def on_message(message):
     await bot.process_commands(message)
 
-bot.run("MTM3ODkxNzUyMTgzODgzNzgxMA.GlqVkM.S8qXLIkS6WvU_dZnL_Xrrz3JRFmiosR50s3DN0")
+bot.run("YOUR_TOKEN")
