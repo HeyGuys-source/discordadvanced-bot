@@ -1,24 +1,11 @@
 import logging
-from utils.health_api import HealthAPI
-from utils.error_handler import setup_error_handler
 import asyncio
 import discord
 from discord.ext import commands
 import os
-from aiohttp import web
 from database import Database
 from config import Config
-# from render_health_setup import setup_render_health_monitoring
-# Create bot instance
-intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
-bot = commands.Bot(command_prefix='!', intents=intents)
-@bot.event
-async def on_ready():
-    print(f'{bot.user} has connected to Discord!')
-    print('Bot is ready!')
-    
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -53,17 +40,15 @@ class AdvancedBot(commands.Bot):
         # Initialize database
         await self.db.init_db()
         
-        # Load all cogs
+        # Load all cogs (REMOVED PROBLEMATIC ONES)
         cogs = [
             'cogs.moderation',
             'cogs.automod',
             'cogs.reaction_roles',
-   #         'cogs.custom_commands',
             'cogs.logging',
             'cogs.welcome',
             'cogs.starboard',
-         #   'cogs.leveling',
-            'cogs.fun'
+            'cogs.fun',
             'cogs.advanced_moderation',
             'cogs.funcogs.discord_fun_commands',
             'cogs.discord_commands',
@@ -91,9 +76,9 @@ class AdvancedBot(commands.Bot):
             'cogs.auto_reaction_feature',
             'cogs.welcome_feature',
             'cogs.partnership_announcer',
-            'cogs.keepalive',
-            'cogs.alt_detection',
-            'cogs.health_monitor'
+            'cogs.keepalive',  # Keep this one - it's the good Discord API keep-alive
+            'cogs.alt_detection'
+            # REMOVED: 'cogs.health_monitor' - This was causing HTTP errors
         ]
         
         for cog in cogs:
@@ -165,18 +150,6 @@ async def main():
     """Main function to run the bot"""
     bot = AdvancedBot()
     
-    # Start web dashboard in background
-    from web_dashboard import create_app
-    import threading
-    
-    def run_dashboard():
-        app = create_app(bot)
-        app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
-    
-    dashboard_thread = threading.Thread(target=run_dashboard)
-    dashboard_thread.daemon = True
-    dashboard_thread.start()
-    
     # Start bot
     token = os.getenv('DISCORD_TOKEN')
     if not token:
@@ -194,14 +167,3 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
-
-from discord.ext import commands
-import discord
-
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
-
-@bot.event
-async def on_message(message):
-    await bot.process_commands(message)
-
-bot.run("YOUR_TOKEN")
